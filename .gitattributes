@@ -1,1 +1,22 @@
 * text=auto !eol
+NxSys/Library/Telemetry/IException.php -text
+NxSys/Library/Telemetry/Instrument.php -text
+NxSys/Library/Telemetry/Measurement.php -text
+NxSys/Library/Telemetry/Measurement/EventMeasurement.php -text
+NxSys/Library/Telemetry/Meter/AbstractMeter.php -text
+NxSys/Library/Telemetry/Meter/MeterDispatcher.php -text
+NxSys/Library/Telemetry/Meter/RawDataMeter.php -text
+NxSys/Library/Telemetry/Processor.php -text
+NxSys/Library/Telemetry/Processor/AbstractProcessor.php -text
+NxSys/Library/Telemetry/Processor/CallableQueueProcessor.php -text
+NxSys/Library/Telemetry/Processor/IException.php -text
+NxSys/Library/Telemetry/Processor/IProcessor.php -text
+NxSys/Library/Telemetry/Processor/LocalLoggingProcessor.php -text
+NxSys/Library/Telemetry/Processor/ProcessorRuntimeException.php -text
+NxSys/Library/Telemetry/Processor/StubProcessor.php -text
+NxSys/Library/Telemetry/Sensor.php -text
+NxSys/Library/Telemetry/Sensor/BufferedSensor.php -text
+NxSys/Library/Telemetry/Sensor/SensorDataPacket.php -text
+NxSys/Library/Telemetry/Service.php -text
+NxSys/Library/Telemetry/composer.json -text
+NxSys/Library/Telemetry/composer.lock -text
