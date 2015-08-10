@@ -1,6 +1,6 @@
 <?php
 /**
- * Telemetry Service
+ * Telemetry Measurement for Events
  *
  * $Id$
  * DESCRIPTION
@@ -18,21 +18,18 @@
  */
 
 /** Local Namespace **/
-namespace NxSys\Library\Telemetry\Processor;
+namespace NxSys\Library\Telemetry\Measurement;
 
-// Project Namespaces
-use NxSys\Library\Telemetry\Sensor;
+// 3rdParty Namespaces
+use DateTime;
 
 /**
- * StubProcessor
+ *
  */
-class StubProcessor extends AbstractProcessor
+interface IMeasurement
 {
 	/**
 	 *
 	 */
-	public function process(Sensor\SensorDataPacket &$oMutableData)
-	{
-		return; //noop
-	}
+	public function setMeasure($mMeasure);
 }

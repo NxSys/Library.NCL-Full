@@ -18,19 +18,12 @@
  */
 
 /** Local Namespace **/
-namespace NxSys\Library\Telemetry;
-
-// Project Namespaces
-use NxSys\Frameworks\Wacc;
-
-// 3rdParty Namespaces
-use Psr\Log,
-	DateTime;
+namespace NxSys\Library\Telemetry\Measurement;
 
 /**
  *
  */
-class EventMeasurement extends Measurement
+class EventMeasurement extends \NxSys\Library\Telemetry\Measurement
 {
 	/**
 	 * @var string
@@ -48,11 +41,6 @@ class EventMeasurement extends Measurement
 	public $oTimestamp;
 
 	/**
-	 * @var string
-	 */
-	public $sNotation;
-
-	/**
 	 * @param $sUnit
 	 * @param $mMeasure
 	 * @param $sNotation
@@ -66,22 +54,11 @@ class EventMeasurement extends Measurement
 
 	/**
 	 * @param $mMeasure
-	 * @return Measurement
+	 * @return EventMeasurement
 	 */
 	public function setEvent($sEventName)
 	{
-		$this->oTimestamp=new DateTime;
-		$this->mMeasure=$sEventName;
-		return $this;
-	}
-
-	/**
-	 * @param $sNotation
-	 * @return Measurement
-	 */
-	public function setNotation($sNotation)
-	{
-		$this->notate=$sNotation;
+		$this->setMeasure($sEventName);
 		return $this;
 	}
 }

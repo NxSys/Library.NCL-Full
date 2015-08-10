@@ -19,7 +19,12 @@
 
 /** Local Namespace **/
 namespace NxSys\Library\Telemetry\Processor;
+
+// Project Namespaces
 use NxSys\Library\Telemetry;
 
+/**
+ * Exception Tag
+ */
 interface IException extends Telemetry\IException
 {}

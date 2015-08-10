@@ -23,12 +23,6 @@ namespace NxSys\Library\Telemetry;
 // Project Namespaces
 use NxSys\Library\Telemetry;
 
-//Framework Namespaces
-use Symfony\Component\DependencyInjection as sfDI;
-
-// 3rdParty Namespaces
-use Some\Other\Project;
-
 /**
  *
  */

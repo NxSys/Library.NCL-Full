@@ -20,17 +20,13 @@
 /** Local Namespace **/
 namespace NxSys\Library\Telemetry;
 
-// Project Namespaces
-use NxSys\Frameworks\Wacc;
-
 // 3rdParty Namespaces
-use Psr\Log,
-	DateTime;
+use DateTime;
 
 /**
  *
  */
-class Measurement
+class Measurement implements Measurement\IMeasurement
 {
 	/**
 	 * @var string

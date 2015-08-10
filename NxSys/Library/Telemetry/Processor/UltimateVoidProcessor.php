@@ -18,19 +18,30 @@
  */
 
 /** Local Namespace **/
-namespace NxSys\Library\Telemetry;
+namespace NxSys\Library\Telemetry\Processor;
 
 // Project Namespaces
-use NxSys\Library\Telemetry\Processor,
-	NxSys\Library\Telemetry\Sensor;
+use NxSys\Library\Telemetry\Sensor;
 
 /**
- *
+ * StubProcessor
  */
-class Processor extends Processor\AbstractProcessor
+class UltimateVoidProcessor extends AbstractProcessor
 {
-	public function process(Sensor\SensorDataPacket &$mMutableData)
+	/**
+	 *
+	 */
+	public function __construct()
 	{
-		var_dump($mMutableData);
+		$this->setUltimateProcessor($this);
+	}
+
+
+	/**
+	 *
+	 */
+	public function process(Sensor\SensorDataPacket &$oMutableData)
+	{
+		return; //noop
 	}
 }

@@ -21,27 +21,37 @@
 namespace NxSys\Library\Telemetry\Meter;
 
 // Project Namespaces
-use NxSys\Library\Telemetry\Processor,
-	NxSys\Library\Telemetry\Sensor;
-
-//Framework Namespaces
-use Symfony\Component\DependencyInjection as sfDI;
-
-// 3rdParty Namespaces
-use Some\Other\Project;
+use NxSys\Library\Telemetry;
 
 /**
  *
  */
-class MeterDispatcher
+class MeterDispatcher implements Telemetry\Sensor\ISensorDataProcessor
 {
+	/*
+	 */
+	public $aMeterList;
+
+	/**
+	 *
+	 */
 	public function registerMeter(AbstractMeter $oMeter)
 	{
-		
+		$this->aMeterList[$oMeter->getInstrumentId()][]=$oMeter;
 	}
 
-	public function processSensorData(Sensor\SensorDataPacket $mMutableData)
+	/**
+	 *
+	 */
+	public function processSensorData(Telemetry\Sensor\SensorDataPacket $oMutableData)
 	{
-
+		$sInstrumentId=$oMutableData->sInstrumentId;
+		if(isset($this->aMeterList[$instrumentId]))
+		{
+			foreach($this->aMeterList[$instrumentId] as $oMeter)
+			{
+				$oMeter->onData($oMutableData);
+			}
+		}
 	}
 }

@@ -1,6 +1,6 @@
 <?php
 /**
- * Telemetry Service
+ * NAME
  *
  * $Id$
  * DESCRIPTION
@@ -21,18 +21,12 @@
 namespace NxSys\Library\Telemetry\Processor;
 
 // Project Namespaces
-use NxSys\Library\Telemetry\Sensor;
+use NxSys\Library\Telemetry;
 
 /**
- * StubProcessor
+ *
  */
-class StubProcessor extends AbstractProcessor
+class RemotedProcessor extends AbstractProcessor
 {
-	/**
-	 *
-	 */
-	public function process(Sensor\SensorDataPacket &$oMutableData)
-	{
-		return; //noop
-	}
+
 }

@@ -19,8 +19,15 @@
 
 /** Local Namespace **/
 namespace NxSys\Library\Telemetry\Processor;
+
+//Project Namespaces
 use NxSys\Library\Telemetry;
+
+// 3rdParty Namespaces
 use RuntimeException;
 
+/**
+ *
+ */
 class ProcessorRuntimeException extends RuntimeException implements IException
 {}

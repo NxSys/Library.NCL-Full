@@ -1,6 +1,6 @@
 <?php
 /**
- * Telemetry Service
+ * NAME
  *
  * $Id$
  * DESCRIPTION
@@ -18,21 +18,22 @@
  */
 
 /** Local Namespace **/
-namespace NxSys\Library\Telemetry\Processor;
+namespace NxSys\Library\Telemetry\Meter;
 
 // Project Namespaces
-use NxSys\Library\Telemetry\Sensor;
+use NxSys\Library\Telemetry,
+	NxSys\Library\Telemetry\Sensor;
+
+// 3rdParty Namespaces
+use Some\Other\Project;
 
 /**
- * StubProcessor
+ *
  */
-class StubProcessor extends AbstractProcessor
+class LoggingMeter
 {
-	/**
-	 *
-	 */
-	public function process(Sensor\SensorDataPacket &$oMutableData)
+	public function onData()
 	{
-		return; //noop
+		var_dump();
 	}
 }

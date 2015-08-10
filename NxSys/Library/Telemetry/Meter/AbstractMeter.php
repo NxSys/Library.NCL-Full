@@ -21,10 +21,7 @@
 namespace NxSys\Library\Telemetry\Meter;
 
 // Project Namespaces
-use NxSys\Frameworks\FW_NAME;
-
-//Framework Namespaces
-use Symfony\Component\DependencyInjection as sfDI;
+use NxSys\Library\Telemetry;
 
 // 3rdParty Namespaces
 use Some\Other\Project;
@@ -34,7 +31,32 @@ use Some\Other\Project;
  */
 class AbstractMeter
 {
+	public $sMeterId;
+	public $sInstrumentId;
 	public function __construct($sMeterId, $sInstrumentId=null)
-	{}
+	{
+		$this->sMeterId=$sMeterId;
+		$this->sInstrumentId=$sInstrumentId;
+	}
 
+	public final function processSensorData(Telemetry\Sensor\SensorDataPacket $oMutableData)
+	{
+		$this->onData($oMutableData);
+		return;
+	}
+
+	/**
+	 * @api
+	 */
+	public abstract function onData(Telemetry\Sensor\SensorDataPacket $oMutableData);
+
+	public function getMeterId()
+	{
+		return $this->sMeterId;
+	}
+
+	public function getInstrumentId()
+	{
+		return $this->sInstrumentId;
+	}
 }

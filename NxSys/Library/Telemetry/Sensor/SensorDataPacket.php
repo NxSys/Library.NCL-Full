@@ -27,20 +27,37 @@ use NxSys\Library\Telemetry;
 use SplQueue;
 
 /**
- *
+ * SensorDataPacket
  */
 class SensorDataPacket
 {
+	/*
+	 */
 	public $sSensorId;
+
+	/*
+	 */
 	public $sInstrumentId;
 
+	/*
+	 */
 	public $sDictionayMode;
+
+	/*
+	 */
 	public $aDictionary;
+
 	/* @var SplQueue
 	 */
 	public $aMeasurements;
+
+	/*
+	 */
 	public $aContexts;
 
+	/**
+	 *
+	 */
 	public function __construct($sSensorId, $sInstrumentId)
 	{
 		$this->sSensorId=$sSensorId;

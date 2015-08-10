@@ -21,42 +21,91 @@
 namespace NxSys\Library\Telemetry\Processor;
 
 // Project Namespace
-use NxSys\Library\Telemetry,
-	NxSys\Library\Telemetry\Meter,
-	NxSys\Library\Telemetry\Sensor;
+use NxSys\Library\Telemetry;
 
 // 3rdParty Namespaces
-use SplPriorityQueue;
+//use SplPriorityQueue;
 
 /**
  * AbstractProcessor
  */
-abstract class AbstractProcessor
+abstract class AbstractProcessor implements Telemetry\Sensor\ISensorDataProcessor
 {
-	/* @var AbstractProcessor
+	/**
+	 * @var AbstractProcessor
 	 */
-	public $oNextProcessor;
-	public $oUltimateProcessor;
+	public $oNextProcessor=null;
+	public $sInstrumentId=null;
+	static public $aUltimateProcessor=[];
 
-	public function processSensorData(Sensor\SensorDataPacket $mMutableData)
+	/**
+	 *
+	 */
+	public final function setUltimateProcessor(Telemetry\Sensor\ISensorDataProcessor $oUltimateProcessor, $sInstrumentId=null)
 	{
-		$this->process($mMutableData);
+		if(!$sInstrumentId)
+		{
+			$sInstrumentId=$this->sInstrumentId;
+		}
+		self::$oUltimateProcessor[$sInstrumentId]=$oUltimateProcessor;
+		return;
+	}
+
+	/**
+	 *
+	 */
+	public function setInstrumentId($sInstrumentId)
+	{
+		$this->sInstrumentId=$sInstrumentId;
+		return;
+	}
+
+	/**
+	 *
+	 *
+	 */
+	public final function processSensorData(Telemetry\Sensor\SensorDataPacket $oMutableData)
+	{
+		//
+		$sInstrumentId=$oMutableData->sInstrumentId;
+		if($sInstrumentId==$this->sInstrumentId)
+		{
+			$this->process($oMutableData);
+		}
+
+		//
 		if(!$this->oNextProcessor)
 		{
 			//meter time
-			if(!$this->oUltimateProcessor)
+			if(!isset(self::$aUltimateProcessor[$this->sInstrumentId]))
 			{
-				$this->oUltimateProcessor=new Meter\MeterDispatcher;
+				self::$aUltimateProcessor[$this->sInstrumentId]=new Telemetry\Meter\MeterDispatcher;
 			}
-			$this->oNextProcessor=$this->oUltimateProcessor;
+			if(!$this===self::$aUltimateProcessor[$this->sInstrumentId])
+			{
+				//if we're using the UP then we should quit
+				self::$aUltimateProcessor[$this->sInstrumentId]->processSensorData($oMutableData);
+			}
+			return;
 		}
-		$this->oNextProcessor->processSensorData($mMutableData); //ad infinitum
+		$this->oNextProcessor->processSensorData($oMutableData); //ad infinitum
+		return;
 	}
 
+	/**
+	 * @return AbstractProcessor
+	 */
 	public function setNextProcessor(AbstractProcessor $oProcessor)
 	{
-		$this->oNextProcessor=$oProcessor;
+		$oProcessor->setInstrumentId($this->sInstrumentId);
+		return $this->oNextProcessor=$oProcessor;
 	}
 
-	abstract function process(Sensor\SensorDataPacket &$mMutableData);
+	/**
+	 *
+	 * Note: while processing, do not change the sInstrumentId.
+	 * You could foul the execution of the UltimateProcessor!
+	 *
+	 */
+	abstract protected function process(Telemetry\Sensor\SensorDataPacket &$oMutableData);
 }

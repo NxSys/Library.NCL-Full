@@ -18,21 +18,21 @@
  */
 
 /** Local Namespace **/
-namespace NxSys\Library\Telemetry;
+namespace NxSys\Library\Telemetry\Meter;
 
 // Project Namespaces
 use NxSys\Library\Telemetry;
 
-//Framework Namespaces
-use Symfony\Component\DependencyInjection as sfDI;
-
-// 3rdParty Namespaces
-use Some\Other\Project;
-
 /**
  *
  */
-class
+class AbstractLimitedMeter extends AbstractMeter
 {
+	public function setThresholds()
+	{
+
+	}
+
+	public function __call()
 
 }

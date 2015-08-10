@@ -22,7 +22,8 @@ namespace NxSys\Library\Telemetry;
 
 // Project Namespaces
 use NxSys\Library\Telemetry,
-	NxSys\Library\Telemetry\Sensor;
+	NxSys\Library\Telemetry\Sensor,
+	NxSys\Library\Telemetry\Processor;
 
 /**
  *
@@ -30,7 +31,16 @@ use NxSys\Library\Telemetry,
 class Instrument
 {
 	public $sInstrumentId;
-	public function __construct($sInstrumentId) {}
+	public $aSensorGroup;
+
+	public $sDefaultProcessor;
+
+	public function __construct($sInstrumentId)
+	{
+		$this->sInstrumentId=$sInstrumentId;
+		$this->sDefaultProcessor=new Processor\StubProcessor;
+		$this->sDefaultProcessor->setInstrumentId($sInstrumentId);
+	}
 
 	/**
 	 *
@@ -38,6 +48,23 @@ class Instrument
 	 */
 	public function createSensor($sId, $sUnit='event')
 	{
-		return new Sensor($sId, $this->sInstrumentId, $sUnit);
+		$sensor=new Sensor($sId, $this->sInstrumentId, $sUnit);
+		$sensor->setProcessor($this->sDefaultProcessor);
+		$this->attachSensor($sensor);
+		return $sensor;
+	}
+
+	public function attachSensor(Sensor $oSensor)
+	{
+		$this->aSensorGroup[$oSensor->getSensorId()]=$oSensor;
+	}
+
+	public function setSensorGroupHeadProcessor(Processor\AbstractProcessor $oProcessor)
+	{
+		foreach($this->aSensorGroup as $sensor)
+		{
+			$sensor->setProcessor($oProcessor);
+		}
+		$this->sDefaultProcessor=$oProcessor;
 	}
 }

@@ -24,13 +24,16 @@ namespace NxSys\Frameworks\Wacc\System\Telemetry\Sensor;
 use NxSys\Library\Telemetry;
 
 // 3rdParty Namespaces
-use Some\Other\Project;
+//use Some\Other\Project;
 
 /**
  *
  */
 class BufferedSensor extends Telemetry\Sensor
 {
+	/**
+	 *
+	 */
 	public function addContext($sContextName, $mContextValue)
 	{
 		$this->oDataPacket->aContexts->enqueue([$sContextName, $mContextValue]);
@@ -39,6 +42,9 @@ class BufferedSensor extends Telemetry\Sensor
 		return $ctxid;
 	}
 
+	/**
+	 *
+	 */
 	public function removeContext($hContext)
 	{
 		if(array_key_exists($hContext, $this->oDataPacket->aCurrentContexts))
@@ -48,12 +54,18 @@ class BufferedSensor extends Telemetry\Sensor
 		return;
 	}
 
+	/**
+	 *
+	 */
 	public function addMeasurement(Measurement $oMeasurement)
 	{
 		$this->aMeasurements->enqueue($oMeasurement);
 		//check buffer stragety
 	}
 
+	/**
+	 *
+	 */
 	public function setBufferStrategy()
 	{
 

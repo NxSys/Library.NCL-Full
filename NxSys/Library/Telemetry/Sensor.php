@@ -21,7 +21,7 @@
 namespace NxSys\Library\Telemetry;
 
 // Project Namespaces
-use NxSys\Library\Telemetry,
+use NxSys\Library\Telemetry\Processor,
 	NxSys\Library\Telemetry\Sensor;
 
 // 3rdParty Namespaces
@@ -54,13 +54,17 @@ class Sensor
 	{
 		$this->sDefaultUnit=$sDefaultUnit;
 		$this->sSensorId=$sSensorId;
+		// we can't have null InstrumentIds, no really. its a bad idea
 		$this->sInstrumentId=$sInstrumentId?:$sSensorId;
 
 		$this->zero();
 
 		//our measurement prototype
 		$this->setMeasurementClass(new Measurement($sDefaultUnit));
-		$this->setProcessor(new Processor\StubProcessor);
+
+		$oProc=new Processor\StubProcessor;
+		$oProc->setInstrumentId($sInstrumentId);
+		$this->setProcessor($oProc);
 	}
 
 	/**
@@ -72,6 +76,9 @@ class Sensor
 		$this->oProcessor=$oProcessor;
 	}
 
+	/**
+	 * @return Telemetry\Processor\AbstractProcessor
+	 */
 	public function getProcessor()
 	{
 		return $this->oProcessor;
@@ -79,7 +86,8 @@ class Sensor
 
 	public function addContext($sContextName, $mContextValue)
 	{
-		$this->oDataPacket->aContexts->enqueue([$sContextName, $mContextValue]);
+		$this->oDataPacket->aContexts->enqueue((object)['sContextName' => $sContextName,
+														'mContextValue' => $mContextValue]);
 		$ctxid=$this->oDataPacket->aContexts->count()-1;
 		$this->aCurrentContexts[]=$ctxid;
 		return key($this->aCurrentContexts);
@@ -102,8 +110,9 @@ class Sensor
 
 	public function clearMeasurements()
 	{
-		//$this->oDataPacket->aMeasurements=new SplQueue;
-		//$this->oDataPacket->aDictionary=new SplQueue;
+		//when testing comment out these lines to inspect dictionary operation
+		$this->oDataPacket->aMeasurements=new SplQueue;
+		$this->oDataPacket->aDictionary=new SplQueue;
 		return;
 	}
 
@@ -129,8 +138,9 @@ class Sensor
 	public function addMeasurement(Measurement $oMeasurement)
 	{
 		$this->oDataPacket->aMeasurements->enqueue($oMeasurement);
-		$mkey=$this->oDataPacket->aMeasurements->count()-1;
-		$this->oDataPacket->aDictionary->enqueue([$mkey, $this->aCurrentContexts]);
+		$iMeasurementKey=$this->oDataPacket->aMeasurements->count()-1;
+		$this->oDataPacket->aDictionary->enqueue((object)['iMeasurementKey' => $iMeasurementKey,
+														  'aCurrentContexts' => $this->aCurrentContexts]);
 		//aaaaand because we're not buffered...
 		$this->flush();
 	}
@@ -163,12 +173,14 @@ class Sensor
 		return;
 	}
 
+	public function getSensorId()
+	{
+		return $this->sSensorId;
+	}
+
 	public function getInstrumentId()
 	{
 		//return object?
 		return $this->sInstrumentId;
 	}
-
-	//public function resetInstrument(Instrument $oMeter)
-	//{}
 }

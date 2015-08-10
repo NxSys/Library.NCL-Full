@@ -20,29 +20,24 @@
 /** Local Namespace **/
 namespace NxSys\Library\Telemetry;
 
-// Project Namespaces
-use NxSys\Frameworks\Wacc;
-
-// 3rdParty Namespaces
-use Psr\Log;
-
 /**
  *
  */
-class Service
+class InstrumentationService
 {
-	public function __construct(Manager $telematicsManger,
-								Log\LoggerInterface $loger)
+	public function __construct()
 	{}
 
 	public function getNewInstrument()
 	{}
-	public function measure($value)
+	public function measure($sSensorName, $mValue)
 	{}
-	public function notate($notation, $attrs)
-	{}
+
 	public function getCurentInstrument()
 	{}
 	public function resetInstrument(Instrument $oMeter)
+	{}
+
+	protected function addInternalTelemetryMeter(Telemetry\Meter\AbstractMeter $oMeter)
 	{}
 }

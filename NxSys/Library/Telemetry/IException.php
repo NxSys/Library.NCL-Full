@@ -20,5 +20,8 @@
 /** Local Namespace **/
 namespace NxSys\Library\Telemetry;
 
+/**
+ * IException
+ */
 interface IException
 {}

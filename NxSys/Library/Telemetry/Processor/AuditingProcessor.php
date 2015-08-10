@@ -26,13 +26,14 @@ use NxSys\Library\Telemetry\Sensor;
 /**
  * StubProcessor
  */
-class StubProcessor extends AbstractProcessor
+class AuditingProcessor extends AbstractProcessor
 {
-	/**
-	 *
-	 */
 	public function process(Sensor\SensorDataPacket &$oMutableData)
 	{
-		return; //noop
+		//var_dump($oMutableData->aDictionary[0]);
+		printf("processing data from sensor %s with %d measure and %d contexts.\n",
+			   $oMutableData->sSensorId,
+			   count($oMutableData->aDictionary[0]),
+			   count($oMutableData->aDictionary[0]->aCurrentContexts));
 	}
 }

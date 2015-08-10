@@ -18,24 +18,52 @@
  */
 
 /** Local Namespace **/
-namespace NxSys\Library\Telemetry;
+namespace NxSys\Library\Telemetry\Processor;
 
 // Project Namespaces
-use NxSys\Library\Telemetry;
-
-//Framework Namespaces
-use Symfony\Component\DependencyInjection as sfDI;
+use NxSys\Library\Telemetry\Sensor;
 
 // 3rdParty Namespaces
-use Some\Other\Project;
+use SplQueue;
 
 /**
  *
  */
 class CallableQueueProcessor extends AbstractProcessor
 {
+	/* @var SplQueue
+	 */
+	public $aCallableQueue;
+
+	public function __construct()
+	{
+		$this->aCallableQueue=new SplQueue;
+	}
+
+	/**
+	 *
+	 * @return CallableQueueProcessor
+	 */
 	public function addCallable(callable $hUserOperation)
 	{
-		
+		$this->aCallableQueue->enqueue($hUserOperation);
+		return $this;
+	}
+
+	public function process(Sensor\SensorDataPacket &$oMutableData)
+	{
+		foreach($this->aCallableQueue as $callable)
+		{
+			if(!$this->verifyCallableSignature($callable))
+			{
+				throw new ProcessorRuntimeException();
+			}
+			call_user_func($callable, $oMutableData);
+		}
+	}
+
+	public function verifyCallableSignature(callable $hUserOperation)
+	{
+		return false;
 	}
 }
