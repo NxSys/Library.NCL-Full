@@ -13,8 +13,8 @@ NxSys/Library/Telemetry/Meter/RawDataMeter.php -text
 NxSys/Library/Telemetry/Processor/AbstractProcessor.php -text
 NxSys/Library/Telemetry/Processor/AuditingProcessor.php -text
 NxSys/Library/Telemetry/Processor/CallableQueueProcessor.php -text
-NxSys/Library/Telemetry/Processor/IException.php -text
 NxSys/Library/Telemetry/Processor/IProcessor.php -text
+NxSys/Library/Telemetry/Processor/ProcessorExceptionType.php -text
 NxSys/Library/Telemetry/Processor/ProcessorRuntimeException.php -text
 NxSys/Library/Telemetry/Processor/Remoting/RemotedProcessor.php -text
 NxSys/Library/Telemetry/Processor/StubProcessor.php -text

@@ -29,5 +29,5 @@ use RuntimeException;
 /**
  *
  */
-class ProcessorRuntimeException extends RuntimeException implements IException
+class ProcessorRuntimeException extends RuntimeException implements ProcessorExceptionType
 {}

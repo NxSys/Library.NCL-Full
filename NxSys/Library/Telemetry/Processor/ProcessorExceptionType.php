@@ -26,5 +26,5 @@ use NxSys\Library\Telemetry;
 /**
  * Exception Tag
  */
-interface IException extends Telemetry\IException
+interface ProcessorExceptionType extends Telemetry\IException
 {}
