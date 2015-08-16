@@ -23,26 +23,26 @@ namespace NxSys\Library\Telemetry\Meter;
 // Project Namespaces
 use NxSys\Library\Telemetry;
 
-// 3rdParty Namespaces
-use Some\Other\Project;
-
 /**
  *
  */
-class AbstractMeter
+abstract class AbstractMeter
 {
 	public $sMeterId;
 	public $sInstrumentId;
-	public function __construct($sMeterId, $sInstrumentId=null)
+	
+	/* @var IMeterStorageHandler
+	 */
+	public $oStorageHandler;
+	
+	public $oMeterDataPacket;
+	
+	public function __construct($sMeterId, $sInstrumentId=null, IMeterStorageHandler $oStorageHandler=null)
 	{
 		$this->sMeterId=$sMeterId;
 		$this->sInstrumentId=$sInstrumentId;
-	}
-
-	public final function processSensorData(Telemetry\Sensor\SensorDataPacket $oMutableData)
-	{
-		$this->onData($oMutableData);
-		return;
+		$this->oStorageHandler=$oStorageHandler?:new VoidStorageHandler;
+		$this->oMeterDataPacket=$this->oStorageHandler->loadData($sMeterId, $sInstrumentId);
 	}
 
 	/**
@@ -58,5 +58,24 @@ class AbstractMeter
 	public function getInstrumentId()
 	{
 		return $this->sInstrumentId;
+	}
+	
+	public function getStorageHandler()
+	{
+		return $this->oStorageHandler;
+	}
+	
+	public function flushMeterData()
+	{
+		$this->oStorageHandler->persistData($this->oMeterDataPacket);
+	}
+	
+	/**
+	 *
+	 *
+	 */
+	public function __destruct()
+	{
+		$this->flushMeterData();
 	}
 }

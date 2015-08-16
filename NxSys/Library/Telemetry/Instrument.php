@@ -34,6 +34,7 @@ class Instrument
 	public $aSensorGroup;
 
 	public $sDefaultProcessor;
+	public $oDefaultMeterStorageHandler;
 
 	public function __construct($sInstrumentId)
 	{
@@ -57,6 +58,11 @@ class Instrument
 	public function attachSensor(Sensor $oSensor)
 	{
 		$this->aSensorGroup[$oSensor->getSensorId()]=$oSensor;
+	}
+	
+	public function setDefaultMeterStorageHandler(Telemetry\Meter\IMeterStorageHandler $oMeterStorageHandler)
+	{
+		$this->oDefaultMeterStorageHandler=$oMeterStorageHandler;
 	}
 
 	public function setSensorGroupHeadProcessor(Processor\AbstractProcessor $oProcessor)

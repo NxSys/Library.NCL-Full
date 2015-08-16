@@ -7,9 +7,12 @@ NxSys/Library/Telemetry/Measurement/EventMeasurement.php -text
 NxSys/Library/Telemetry/Measurement/IMeasurement.php -text
 NxSys/Library/Telemetry/Meter/AbstractLimitedMeter.php -text
 NxSys/Library/Telemetry/Meter/AbstractMeter.php -text
+NxSys/Library/Telemetry/Meter/IMeterStorageHandler.php -text
 NxSys/Library/Telemetry/Meter/LoggingMeter.php -text
+NxSys/Library/Telemetry/Meter/MeterDataPacket.php -text
 NxSys/Library/Telemetry/Meter/MeterDispatcher.php -text
 NxSys/Library/Telemetry/Meter/RawDataMeter.php -text
+NxSys/Library/Telemetry/Meter/VoidStorageHandler.php -text
 NxSys/Library/Telemetry/Processor/AbstractProcessor.php -text
 NxSys/Library/Telemetry/Processor/AuditingProcessor.php -text
 NxSys/Library/Telemetry/Processor/CallableQueueProcessor.php -text
