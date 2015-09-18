@@ -28,3 +28,11 @@ NxSys/Library/Telemetry/Sensor/ISensorDataProcessor.php -text
 NxSys/Library/Telemetry/Sensor/SensorDataPacket.php -text
 NxSys/Library/Telemetry/composer.json -text
 NxSys/Library/Telemetry/composer.lock -text
+/codeception.yml -text
+/sonar-project.properties -text
+tests/_bootstrap.php -text
+tests/_support/Codeception/Verify.php -text
+tests/_support/Codeception/function.php -text
+tests/unit.suite.yml -text
+tests/unit/Telemetry_sensorCept.php -text
+tests/unit/_bootstrap.php -text
