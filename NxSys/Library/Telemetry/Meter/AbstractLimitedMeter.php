@@ -32,7 +32,4 @@ class AbstractLimitedMeter extends AbstractMeter
 	{
 
 	}
-
-	public function __call()
-
 }

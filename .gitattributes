@@ -10,7 +10,7 @@ NxSys/Library/Telemetry/Meter/AbstractMeter.php -text
 NxSys/Library/Telemetry/Meter/IMeterStorageHandler.php -text
 NxSys/Library/Telemetry/Meter/LoggingMeter.php -text
 NxSys/Library/Telemetry/Meter/MeterDataPacket.php -text
-NxSys/Library/Telemetry/Meter/MeterDispatcher.php -text
+NxSys/Library/Telemetry/Meter/MeterManager.php -text
 NxSys/Library/Telemetry/Meter/RawDataMeter.php -text
 NxSys/Library/Telemetry/Meter/VoidStorageHandler.php -text
 NxSys/Library/Telemetry/Processor/AbstractProcessor.php -text

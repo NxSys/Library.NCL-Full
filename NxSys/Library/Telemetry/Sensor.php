@@ -49,7 +49,8 @@ class Sensor
 
 	public $bIsBuffered=false;
 
-	public function __construct($sSensorId, $sInstrumentId=null,
+	public function __construct($sSensorId,
+								$sInstrumentId=null,
 								$sDefaultUnit='event')
 	{
 		$this->sDefaultUnit=$sDefaultUnit;

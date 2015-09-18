@@ -26,11 +26,25 @@ use NxSys\Library\Telemetry;
 /**
  *
  */
-class MeterDispatcher implements Telemetry\Sensor\ISensorDataProcessor
+class MeterManager
 {
 	/*
 	 */
 	public $aMeterList;
+
+	static public $oInstance;
+
+	private function __construct()
+	{}
+
+	static public function getInstance()
+	{
+		if(!self::$oInstance)
+		{
+			self::$oInstance=new MeterManager;
+		}
+		return self::$oInstance;
+	}
 
 	/**
 	 *

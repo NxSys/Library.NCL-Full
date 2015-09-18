@@ -1,5 +1,5 @@
 {
-    "name": "nxsys/library.telemetry",
+    "name": "nxsys/library.ncl-telemetry",
     "description": "Simple multipurpose telemetry collecting, processing, and metering library.",
     "type": "library",
     "require":

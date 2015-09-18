@@ -26,7 +26,7 @@ use NxSys\Library\Telemetry;
 /**
  *
  */
-Interface IProcessor
+interface IProcessor
 {
 
 }

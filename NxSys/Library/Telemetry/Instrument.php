@@ -34,6 +34,7 @@ class Instrument
 	public $aSensorGroup;
 
 	public $sDefaultProcessor;
+	public $oMeterManager;
 	public $oDefaultMeterStorageHandler;
 
 	public function __construct($sInstrumentId)
@@ -41,6 +42,7 @@ class Instrument
 		$this->sInstrumentId=$sInstrumentId;
 		$this->sDefaultProcessor=new Processor\StubProcessor;
 		$this->sDefaultProcessor->setInstrumentId($sInstrumentId);
+		$this->oMeterManager=Telemetry\Meter\MeterManager::getInstance();
 	}
 
 	/**
@@ -59,7 +61,7 @@ class Instrument
 	{
 		$this->aSensorGroup[$oSensor->getSensorId()]=$oSensor;
 	}
-	
+
 	public function setDefaultMeterStorageHandler(Telemetry\Meter\IMeterStorageHandler $oMeterStorageHandler)
 	{
 		$this->oDefaultMeterStorageHandler=$oMeterStorageHandler;

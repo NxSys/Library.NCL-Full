@@ -79,7 +79,7 @@ abstract class AbstractProcessor implements Telemetry\Sensor\ISensorDataProcesso
 			//meter time
 			if(!isset(self::$aUltimateProcessor[$this->sInstrumentId]))
 			{
-				self::$aUltimateProcessor[$this->sInstrumentId]=new Telemetry\Meter\MeterDispatcher;
+				self::$aUltimateProcessor[$this->sInstrumentId]=Telemetry\Meter\MeterManager::getInstance();
 			}
 			if(!$this===self::$aUltimateProcessor[$this->sInstrumentId])
 			{
