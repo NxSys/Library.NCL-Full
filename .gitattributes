@@ -39,5 +39,6 @@ tests/_support/Helper/Unit.php -text
 tests/_support/UnitTester.php -text
 tests/_support/_generated/UnitTesterActions.php -text
 tests/unit.suite.yml -text
+tests/unit/Telemetry_instrumentCept.php -text
 tests/unit/Telemetry_sensorCept.php -text
 tests/unit/_bootstrap.php -text

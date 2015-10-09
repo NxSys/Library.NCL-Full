@@ -47,7 +47,7 @@ abstract class AbstractProcessor implements Telemetry\Sensor\ISensorDataProcesso
 		{
 			$sInstrumentId=$this->sInstrumentId;
 		}
-		self::$oUltimateProcessor[$sInstrumentId]=$oUltimateProcessor;
+		self::$aUltimateProcessor[$sInstrumentId]=$oUltimateProcessor;
 		return;
 	}
 

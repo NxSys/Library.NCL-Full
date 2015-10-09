@@ -1,6 +1,6 @@
 <?php
 /**
- * NAME
+ * Instrument Class
  *
  * $Id$
  * DESCRIPTION
@@ -46,7 +46,10 @@ class Instrument
 	}
 
 	/**
-	 *
+	 * Create a sensor and adds it to this instrument's sensor group
+	 * 
+	 * @param string $sId id to name the sensor
+	 * @param string $sUnit default unit of measure for the sensor
 	 * @return Sensor
 	 */
 	public function createSensor($sId, $sUnit='event')
@@ -57,16 +60,33 @@ class Instrument
 		return $sensor;
 	}
 
+	/**
+	 * Attaches a sensor to this instrument's sensor group
+	 *
+	 * @param Sensor $oSensor Sensor to attached
+	 * @return Sensor
+	 */
 	public function attachSensor(Sensor $oSensor)
 	{
 		$this->aSensorGroup[$oSensor->getSensorId()]=$oSensor;
+		return $this->aSensorGroup[$oSensor->getSensorId()];
 	}
 
+	/**
+	 * Sets a default MeterStorageHandler
+	 *
+	 * @param Telemetry\Meter\IMeterStorageHandler $oMeterStorageHandler
+	 */
 	public function setDefaultMeterStorageHandler(Telemetry\Meter\IMeterStorageHandler $oMeterStorageHandler)
 	{
 		$this->oDefaultMeterStorageHandler=$oMeterStorageHandler;
 	}
 
+	/**
+	 * Sets or resets the default processor "chain head" for attached sensors
+	 *
+	 * @param Processor\AbstractProcessor $oProcessor
+	 */
 	public function setSensorGroupHeadProcessor(Processor\AbstractProcessor $oProcessor)
 	{
 		foreach($this->aSensorGroup as $sensor)
