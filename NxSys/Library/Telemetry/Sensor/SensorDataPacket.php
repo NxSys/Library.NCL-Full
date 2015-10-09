@@ -28,6 +28,8 @@ use SplQueue;
 
 /**
  * SensorDataPacket
+ *
+ * This represents a packet of data that the Sensor "pumps" back to processors.
  */
 class SensorDataPacket
 {
@@ -56,7 +58,7 @@ class SensorDataPacket
 	public $aContexts;
 
 	/**
-	 *
+	 * You will need at least the sensor name an and instrument group name to construct this
 	 */
 	public function __construct($sSensorId, $sInstrumentId)
 	{

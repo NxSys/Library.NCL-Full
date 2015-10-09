@@ -1,9 +1,8 @@
 <?php
 /**
- * Telemetry Service
+ * Telemetry Service class
  *
  * $Id$
- * DESCRIPTION
  *
  * @link http://nxsys.org/spaces/onx/wiki/Nexus_Common_Library
  * @package NxSys.Library\Telemetry
@@ -28,7 +27,10 @@ use NxSys\Library\Telemetry\Processor,
 use SplQueue;
 
 /**
+ * Sensor object
  *
+ * This represents a control object that accepts Measurements and
+ * emits SensorDataPackets.
  */
 class Sensor
 {
@@ -49,6 +51,17 @@ class Sensor
 
 	public $bIsBuffered=false;
 
+	/**
+	 * Create a new sensor
+	 *
+	 * This creates a new sensor that can be used to collect Meansurements and
+	 * push SensorDataObjects to Processors and Meters
+	 *
+	 * @param $sSensorId string Id (name) of sensor
+	 * @param $sInstrumentId string Id (name) of the instrument group this sensor is a part of
+	 * @param $sDefaultUnit string The default unit that composited (via ::measure() )
+	 * 	measurements will have
+	 */
 	public function __construct($sSensorId,
 								$sInstrumentId=null,
 								$sDefaultUnit='event')
@@ -69,8 +82,13 @@ class Sensor
 	}
 
 	/**
+	 * Sets a the Processor that SensorDataPackets are sent to
 	 *
+	 * Here you can set the "root" of the Processor chain. Note, its is generally
+	 * easier to simply "flow" via ->getProcessor()->setNextProcessor(...) as
+	 * $this->oProcessor will be initialized with VoidProcessor
 	 *
+	 * @param $oProcessor Processor\AbstractProcessor a Processor of SensorDataPackets
 	 */
 	public function setProcessor(Processor\AbstractProcessor $oProcessor)
 	{
@@ -78,22 +96,54 @@ class Sensor
 	}
 
 	/**
-	 * @return Telemetry\Processor\AbstractProcessor
+	 * Returns the Processor of this sensor
+	 *
+	 * @return Telemetry\Processor\AbstractProcessor the current Processor
 	 */
 	public function getProcessor()
 	{
 		return $this->oProcessor;
 	}
 
+	/**
+	 * Adds a context to subsequent measurments
+	 *
+	 * This adds a "context set" to additional Measurements stored in
+	 * the SensorDataPacket. This set:
+	 *  <code>
+	 *  ['sContextName' => $sContextName,
+	 *  'mContextValue' => $mContextValue]
+	 *  </code>
+	 * is enqued onto the current SDP in a context queue and also in a
+	 * CurrentContext cache. We then return the index of the new local cache entry.
+	 * 
+	 * @see removeContext
+	 *
+	 * @param $sContextName string name of the context
+	 * @param $mContextValue mixed context value
+	 * @return int handle (index) of new context entry
+	 */
 	public function addContext($sContextName, $mContextValue)
 	{
 		$this->oDataPacket->aContexts->enqueue((object)['sContextName' => $sContextName,
 														'mContextValue' => $mContextValue]);
-		$ctxid=$this->oDataPacket->aContexts->count()-1;
+		#if ever threaded, consider a lock
+		$ctxid=$this->oDataPacket->aContexts->count()-1; 
 		$this->aCurrentContexts[]=$ctxid;
 		return key($this->aCurrentContexts);
 	}
 
+	/**
+	 * Removes a context from current contexts via handle returned from ::addContext
+	 *
+	 * Please note that this will not remove a context from inside of the SensorDataPacket,
+	 * as we do not "garbage collect" them.
+	 * 
+	 * @see addContext
+	 * @see $hContext handle|int handle (index) to the stored context
+	 * @param void
+	 * @return void
+	 */
 	public function removeContext($hContext)
 	{
 		if(array_key_exists($hContext, $this->aCurrentContexts))
@@ -103,12 +153,26 @@ class Sensor
 		return;
 	}
 
+	/**
+	 * Clears all of the current contexts without needing a handle to a context
+	 * @param void
+	 * @return void
+	 */
 	public function clearCurrentContext()
 	{
 		$this->aCurrentContexts=[];
 		return;
 	}
 
+	/**
+	 * This will empty the SensorDataPacket of its measurments and its lookup dictionary.
+	 *
+	 * Note this does not explicently clear contexts from the SDP
+	 * as we don't care to invalidate $this->aCurrentContexts from here
+	 * 
+	 * @param void
+	 * @return void
+	 */
 	public function clearMeasurements()
 	{
 		//when testing comment out these lines to inspect dictionary operation
@@ -117,6 +181,15 @@ class Sensor
 		return;
 	}
 
+	/**
+	 * Send the SensorDataPacket back to the Processor (chain)
+	 *
+	 * After that we clear the measurements, so we can resume collection
+	 * with current contexts
+	 * 
+	 * @param void
+	 * @return void
+	 */
 	public function flush()
 	{
 		$this->getProcessor()->processSensorData($this->oDataPacket);
@@ -124,17 +197,33 @@ class Sensor
 		return;
 	}
 
+	/**
+	 * Zeros the sensor
+	 *
+	 * Removes the SensorDataPacket, removes all current contexts,
+	 * and instantiates and new SDP. Use this instead of destroying a
+	 * Sensor so you don't have to configure an new one.
+	 * 
+	 * @param void
+	 * @return void
+	 */
 	public function zero()
 	{
 		unset($this->oDataPacket);
+		$this->aCurrentContexts=[];
 		$this->oDataPacket=new Sensor\SensorDataPacket($this->sSensorId,
 													   $this->sInstrumentId);
-		$this->aCurrentContexts=[];
 	}
 
 	/**
+	 * Adds a Measurement to the Sensor
+	 *
+	 * Once it enques the measurement it stores related indexes into the
+	 * SDP dictionary
 	 *
 	 * @throws Processor\ProcessorException by way of flush()
+	 * @param $oMeasurement Measurement the measurement to record
+	 * @return void
 	 */
 	public function addMeasurement(Measurement $oMeasurement)
 	{
@@ -146,14 +235,28 @@ class Sensor
 		$this->flush();
 	}
 
+	/**
+	 * Shortcut to add a measurment with a one-off context of 'notatation'
+	 *
+	 * @param $oMeasurement Measurement measurement to add
+	 * @param $sNotation string notation to add
+	 * @return void
+	 */
 	public function addMeasurementWithNotation(Measurement $oMeasurement, $sNotation)
 	{
 		$hCtx=$this->addContext('notation', $sNotation);
 		$this->addMeasurement($oMeasurement);
 		$this->removeContext($hCtx);
-		return $hCtx;
+		return;
 	}
 
+	/**
+	 * Sets a template Measurement class for use with ::measure()
+	 * 
+	 * @see measure()
+	 * @param $oMeasurementBase Measurement
+	 * @return Measurement previous MeasurementBase
+	 */
 	public function setMeasurementClass(Measurement $oMeasurementBase)
 	{
 		$old=$this->oMeasurementBase;
@@ -161,11 +264,30 @@ class Sensor
 		return $old;
 	}
 
-	public function setDefaultUnit($sUnit)
+	/**
+	 * Sets default unit of the MeasurementBase
+	 *
+	 * Note: this has limited to n effect once you use ::setMeasureMentClass()
+	 *
+	 * @see setMeasureMmentClass
+	 * @see measure()
+	 * @param $sUnit string default unit of measure
+	 * @return string previous measurement unit (likely to be 'event')
+	 */
+	protected function setDefaultUnit($sUnit)
 	{
+		$old=$this->sDefaultUnit;
 		$this->sDefaultUnit=$sUnit;
+		return $old;
 	}
 
+	/**
+	 * Copies the default Measurement base object, applies a value to it, and records it.
+	 *
+	 * Shortcut method
+	 * @param $mValue mixed value to be measured
+	 * @return void
+	 */
 	public function measure($mValue)
 	{
 		$newMeasurement=clone $this->oMeasurementBase;
@@ -174,11 +296,21 @@ class Sensor
 		return;
 	}
 
+	/**
+	 * Returns the current sensor ID
+	 *
+	 * @return string the current sensor ID
+	 */
 	public function getSensorId()
 	{
 		return $this->sSensorId;
 	}
 
+	/**
+	 * Returns the current instrument ID
+	 *
+	 * @return string the current instrument ID
+	 */
 	public function getInstrumentId()
 	{
 		//return object?

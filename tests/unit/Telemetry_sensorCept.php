@@ -5,12 +5,13 @@ use Codeception\Verify;
 // @group 'Telemetry'
 $I = new UnitTester($scenario);
 
-$I->wantTo('perform actions and see result');
-(new Verify(false))->true();
+$I->wantTo('test my sensor');
+$oInstrumentation=new Telemetry\Instrument('my.instument.group');
+$sensor=$oInstrumentation->createSensor('poke-sensor');
+(new Verify($sensor))->true();
+
 //$I->assertTrue('meter');
 
-	$oInstrumentation=new Telemetry\Instrument('my.instument.group');
-	$sensor=$oInstrumentation->createSensor('poke-sensor');
 	$sensor->setDefaultUnit('pokes');
 	$sensor->measure('10');
 
