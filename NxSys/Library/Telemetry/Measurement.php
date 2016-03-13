@@ -30,6 +30,7 @@ class Measurement implements Measurement\IMeasurement
 {
 	/**
 	 * @var string
+	 * @link http://physics.nist.gov/cuu/Units/index.html
 	 */
 	public $sUnit;
 
@@ -68,6 +69,16 @@ class Measurement implements Measurement\IMeasurement
 		$this->oTimestamp=new DateTime;
 		$this->mMeasure=$mMeasure;
 		return $this;
+	}
+
+	public function getMeasure()
+	{
+		return $this->mMeasure;
+	}
+
+	public function getTimestamp()
+	{
+		return $this->oTimestamp;
 	}
 
 	/**

@@ -92,6 +92,7 @@ class Sensor
 	 */
 	public function setProcessor(Processor\AbstractProcessor $oProcessor)
 	{
+		$oProcessor->setInstrumentId($this->sInstrumentId);
 		$this->oProcessor=$oProcessor;
 	}
 
@@ -116,7 +117,7 @@ class Sensor
 	 *  </code>
 	 * is enqued onto the current SDP in a context queue and also in a
 	 * CurrentContext cache. We then return the index of the new local cache entry.
-	 * 
+	 *
 	 * @see removeContext
 	 *
 	 * @param $sContextName string name of the context
@@ -128,7 +129,7 @@ class Sensor
 		$this->oDataPacket->aContexts->enqueue((object)['sContextName' => $sContextName,
 														'mContextValue' => $mContextValue]);
 		#if ever threaded, consider a lock
-		$ctxid=$this->oDataPacket->aContexts->count()-1; 
+		$ctxid=$this->oDataPacket->aContexts->count()-1;
 		$this->aCurrentContexts[]=$ctxid;
 		return key($this->aCurrentContexts);
 	}
@@ -138,7 +139,7 @@ class Sensor
 	 *
 	 * Please note that this will not remove a context from inside of the SensorDataPacket,
 	 * as we do not "garbage collect" them.
-	 * 
+	 *
 	 * @see addContext
 	 * @see $hContext handle|int handle (index) to the stored context
 	 * @param void
@@ -169,7 +170,7 @@ class Sensor
 	 *
 	 * Note this does not explicently clear contexts from the SDP
 	 * as we don't care to invalidate $this->aCurrentContexts from here
-	 * 
+	 *
 	 * @param void
 	 * @return void
 	 */
@@ -186,7 +187,7 @@ class Sensor
 	 *
 	 * After that we clear the measurements, so we can resume collection
 	 * with current contexts
-	 * 
+	 *
 	 * @param void
 	 * @return void
 	 */
@@ -203,7 +204,7 @@ class Sensor
 	 * Removes the SensorDataPacket, removes all current contexts,
 	 * and instantiates and new SDP. Use this instead of destroying a
 	 * Sensor so you don't have to configure an new one.
-	 * 
+	 *
 	 * @param void
 	 * @return void
 	 */
@@ -244,7 +245,20 @@ class Sensor
 	 */
 	public function addMeasurementWithNotation(Measurement $oMeasurement, $sNotation)
 	{
-		$hCtx=$this->addContext('notation', $sNotation);
+		$this->addMeasurementWithContext($oMeasurement, 'notation', (string) $sNotation);
+		return;
+	}
+
+	/**
+	 * Shortcut to add a measurment with a single one-off context
+	 *
+	 * @param $oMeasurement Measurement measurement to add
+	 * @param $sNotation string notation to add
+	 * @return void
+	 */
+	public function addMeasurementWithContext(Measurement $oMeasurement, $sContextName, $mContext)
+	{
+		$hCtx=$this->addContext($sContextName, $mContext);
 		$this->addMeasurement($oMeasurement);
 		$this->removeContext($hCtx);
 		return;
@@ -252,7 +266,7 @@ class Sensor
 
 	/**
 	 * Sets a template Measurement class for use with ::measure()
-	 * 
+	 *
 	 * @see measure()
 	 * @param $oMeasurementBase Measurement
 	 * @return Measurement previous MeasurementBase
