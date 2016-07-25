@@ -2,7 +2,7 @@
 /**
  * Telemetry Service
  *
- * $Id: StubProcessor.php 4 2015-08-10 18:27:09Z nxs.cfeamster $
+ * $Id$
  * DESCRIPTION
  *
  * @link http://nxsys.org/spaces/onx/wiki/Nexus_Common_Library
@@ -12,9 +12,9 @@
  * @copyright Copyright 2015 Nexus Systems, Inc.
  *
  * @author Chris R. Feamster <cfeamster@nxsysts.com>
- * @author $LastChangedBy: nxs.cfeamster $
+ * @author $LastChangedBy$
  *
- * @version $Revision: 4 $
+ * @version $Revision$
  */
 
 /** Local Namespace **/
@@ -47,7 +47,9 @@ class LoggingProcessor extends AbstractProcessor implements StdLogging\LoggerAwa
     }
 
     /**
-     *
+     * Sets the logger message format
+     * @param string $sMessageFmt the message fmt (see sprintf)
+     * @return void
      */
     public function setLogMessageFmt($sMessageFmt)
     {
@@ -55,7 +57,8 @@ class LoggingProcessor extends AbstractProcessor implements StdLogging\LoggerAwa
     }
 
 	/**
-	 *
+	 * @inheritDoc
+	 * Must call ->setLogger() before use.
 	 */
 	public function process(Sensor\SensorDataPacket &$oMutableData)
 	{
