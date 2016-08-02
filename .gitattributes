@@ -1,6 +1,25 @@
 * text=auto !eol
 /codeception.yml -text
 /sonar-project.properties -text
+src/NxSys/Library/IO/DecoratingTrait.php -text
+src/NxSys/Library/IO/IException.php -text
+src/NxSys/Library/IO/IhasTraitDecorating.php -text
+src/NxSys/Library/IO/StdInterface/DirectoryIterator.php -text
+src/NxSys/Library/IO/StdInterface/FilesystemIterator.php -text
+src/NxSys/Library/IO/StdInterface/GlobIterator.php -text
+src/NxSys/Library/IO/StdInterface/ICompleteStreamWrapper.php -text
+src/NxSys/Library/IO/StdInterface/IDirectoryIterator.php -text
+src/NxSys/Library/IO/StdInterface/IFilesystemIterator.php -text
+src/NxSys/Library/IO/StdInterface/IGlobIterator.php -text
+src/NxSys/Library/IO/StdInterface/IRecursiveDirectoryIterator.php -text
+src/NxSys/Library/IO/StdInterface/ISplFileInfo.php -text
+src/NxSys/Library/IO/StdInterface/ISplFileObject.php -text
+src/NxSys/Library/IO/StdInterface/ISplTempFileObject.php -text
+src/NxSys/Library/IO/StdInterface/IStdException.php -text
+src/NxSys/Library/IO/StdInterface/RecursiveDirectoryIterator.php -text
+src/NxSys/Library/IO/StdInterface/SplFileInfo.php -text
+src/NxSys/Library/IO/StdInterface/SplFileObject.php -text
+src/NxSys/Library/IO/StdInterface/SplTempFileObject.php -text
 src/NxSys/Library/Telemetry/IException.php -text
 src/NxSys/Library/Telemetry/Instrument.php -text
 src/NxSys/Library/Telemetry/InstrumentationService.php -text
