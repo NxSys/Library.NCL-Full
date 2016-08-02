@@ -18,7 +18,7 @@
  */
 
 /** Local Namespace **/
-namespace NxSys\Frameworks\Wacc\System\Telemetry\Sensor;
+namespace NxSys\Library\Telemetry\Sensor;
 
 // Project Namespaces
 use NxSys\Library\Telemetry;

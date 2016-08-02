@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ===========================================================================
+# Nexus Common Library Phing Build Script
+# $Id$
+#
+# Description:
+#   For use by phing
+# Meta Tags:
+# @package nxsys/library.ncl
+# @subpackage Meta
+# @author Chris R. Feamster <os@nexussystemsinc.com>
+# @author $LastChangedBy$
+#
+# @version $Revision$
+# @copyright (c) 2016 Nexus Systems, Inc. Some rights reserved.
+#
+============================================================================ -->
+<project name="nxsys/library.ncl" default="build">
+	<property file="build.properties" />
+	<if>
+		<not>
+			<or>
+				<available file="box.json" />
+				<available file="masthead.txt" />
+				<available file="PharMain.php" />
+				<available file="build.properties" />
+			</or>
+		</not>
+		<then>
+			<fail message="One of build.properties, box.json, PharMain.php or masthead.txt is missing!"/>
+		</then>
+	</if>
+	<tstamp />
+	<tstamp>
+		<format property="YEAR" pattern="%Y"/>
+	</tstamp>
+	<!-- removed "generate" target for pre constructed prj  -->
+
+	<!-- ============================================  -->
+	<!-- Target: prepare                               -->
+	<!-- ============================================  -->
+	<target name="prepare">
+		<!--Needs "sed"-->
+		<exec command='svn info | sed -n "/URL:/s/.*\///p"'
+			  outputProperty='svnParentDir'/>
+		<reflexive>
+			<fileset dir="."
+				includes="box.json
+						  masthead.txt"/>
+			<filterchain>
+				<replacetokens begintoken="##" endtoken="##">
+					<token key="prj.identkey" value="${prj.identkey}" />
+					<token key="prj.name" value="${prj.name}" />
+					<token key="prj.ver" value="##${prj.ver}##" />
+					<token key="year" value="${YEAR}" />
+				</replacetokens>
+			</filterchain>
+		</reflexive>
+		<mkdir dir="vendor" />
+		<mkdir dir="build" />
+		<mkdir dir="res" />
+	</target>
+
+	<!-- ============================================  -->
+	<!-- Target: (DEFAULT) build                       -->
+	<!-- ============================================  -->
+	<target name="build" depends="prepare">
+		<echo msg="Building Phar..." />
+		<mkdir dir="build" />
+		<exec command='for /f "usebackq tokens=*" %b in (`where box /f`) do copy %b /y' />
+		<if>
+			<not>
+				<available file="box.phar" />
+			</not>
+			<then>
+				<exec command="curl -LSs https://box-project.github.io/box2/installer.php | php" />
+				<if>
+					<not>
+						<available file="box.phar" />
+					</not>
+					<then>
+						<fail message="Unable to obtain box.phar. Please goto http://box-project.github.io/box2 and place box.phar in your path or current directory." />
+					</then>
+				</if>
+			</then>
+		</if>
+		<exec command="php -d phar.readonly=Off -f box.phar -- build -v" />
+		<copy file="${prj.identkey}.phar" todir="build" />
+		<copy file="${prj.identkey}.phar.pubkey" todir="build" />
+	</target>
+
+	<!-- ============================================  -->
+	<!-- Target: build-docs                            -->
+	<!-- ============================================  -->
+	<target name="build-docs" depends="prepare">
+		<echo msg="Creating Docs\API ..." />
+		<apigen source="src,vendor" destination="build/docs/api"
+				title="${prj.name} (trunk) API Docs"
+				nosourcecode="" exclude="*/tests/*,*/Tests/*,*/Self-Test/*"
+				debug="" tree=""/>
+		<!-- @todo gen sphinx docs if applicable -->
+	</target>
+
+	<!-- ============================================  -->
+	<!-- Target: prepare-dist                          -->
+	<!-- ============================================  -->
+	<target name="prepare-dist" depends="build-docs, build">
+		<version releasetype="Bugfix" file="version.txt" property="prj.ver"/>
+	</target>
+
+	<!-- ============================================  -->
+	<!-- Target: dist-phar (Phar Only)                 -->
+	<!-- ============================================  -->
+	<target name="dist-phar" depends="prepare-dist">
+		<echo msg="Creating archive..." />
+		<zip destfile="./build/${prj.identkey}-phar_${prj.ver}+${DSTAMP}${TSTAMP}.zip">
+			<fileset dir=".">
+				<include name="${prj.identkey}.phar" />
+				<include name="${prj.identkey}.phar.pubkey" />
+			</fileset>
+		</zip>
+		<echo msg="Files copied and compressed in build directory OK!" />
+	</target>
+	<!-- ============================================  -->
+	<!-- Target: dist-full (FULL dir structure)        -->
+	<!-- ============================================  -->
+	<target name="dist-full" depends="prepare-dist">
+		<echo msg="Creating archive..." />
+		<zip destfile="./build/${prj.identkey}-full_${prj.ver}+${DSTAMP}${TSTAMP}.zip">
+			<fileset dir=".">
+				<include name="${prj.identkey}.phar" />
+				<include name="${prj.identkey}.phar.pubkey" />
+				<include name="${prj.identkey}.conf" />
+				<include name="libs/" />
+				<include name="etc/" />
+				<include name="docs/" />
+			</fileset>
+		</zip>
+		<echo msg="Files copied and compressed in build directory OK!" />
+	</target>
+</project>

@@ -1,6 +1,9 @@
 * text=auto !eol
+/build.properties -text
+/build.xml -text
 /codeception.yml -text
 /sonar-project.properties -text
+src-docs/apigen.neon -text
 src/NxSys/Library/IO/DecoratingTrait.php -text
 src/NxSys/Library/IO/IException.php -text
 src/NxSys/Library/IO/IhasTraitDecorating.php -text
@@ -20,6 +23,7 @@ src/NxSys/Library/IO/StdInterface/RecursiveDirectoryIterator.php -text
 src/NxSys/Library/IO/StdInterface/SplFileInfo.php -text
 src/NxSys/Library/IO/StdInterface/SplFileObject.php -text
 src/NxSys/Library/IO/StdInterface/SplTempFileObject.php -text
+src/NxSys/Library/IO/composer.json -text
 src/NxSys/Library/Telemetry/IException.php -text
 src/NxSys/Library/Telemetry/Instrument.php -text
 src/NxSys/Library/Telemetry/InstrumentationService.php -text

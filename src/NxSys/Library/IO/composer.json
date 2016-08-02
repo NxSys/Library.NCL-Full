@@ -1,0 +1,29 @@
+{
+    "name": "nxsys/library.ncl-io",
+    "description": " library.",
+    "type": "library",
+    "require":
+    {
+        "ext-SPL": "^0.2"
+    },
+    "suggest":
+    {
+        "nxsys/toolkits.openvfs": "*",
+        "monolog/monolog": "*"
+    },
+    "require-dev":
+    {
+        "nxsys/library.ncl": "dev",
+        "codeception/codeception": "^2.1",
+        "monolog/monolog": "*"
+    },
+    "license": "MIT",
+    "authors":
+    [
+        {
+            "name": "Nexus Systems, Inc.",
+            "email": "os@nxsysts.com"
+        }
+    ],
+    "minimum-stability": "stable"
+}
