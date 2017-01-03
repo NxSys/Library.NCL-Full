@@ -33,6 +33,8 @@ use InvalidArgumentException as IVAX;
  *
  *  <li> Preemptive error handling to clarify what happens when using invalid labels (names)</li>
  * </ol>
+ * Note: Wrapping objects containing __call magic is not "strictly" supported. Does 
+ *  this affect a use case of yours? Let us know!
  * @todo proper staic support
  * @todo richer error handling
  * @see IhasTraitDecorating

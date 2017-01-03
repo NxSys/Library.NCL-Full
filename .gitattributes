@@ -62,8 +62,10 @@ tests/_support/FunctionalTester.php -text
 tests/_support/Helper/Functional.php -text
 tests/_support/Helper/Unit.php -text
 tests/_support/UnitTester.php -text
-tests/_support/_generated/UnitTesterActions.php -text
 tests/unit.suite.yml -text
+tests/unit/IO.feature -text
+tests/unit/IO_stdInterfaceCept.php -text
+tests/unit/IO_streamsCept.php -text
 tests/unit/Telemetry_instrumentCept.php -text
 tests/unit/Telemetry_sensorCept.php -text
 tests/unit/Telemetry_sensorTest.php -text

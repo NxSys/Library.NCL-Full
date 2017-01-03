@@ -1,6 +1,9 @@
 <?php
 // This is global bootstrap for autoloading
 
+set_include_path('./src'.PATH_SEPARATOR.get_include_path());
+
+
 //Use non-ignorant autoloader
 // because phars are a case affected by phpbug #49625
 
