@@ -2,8 +2,8 @@
     "name": "nxsys/library.data-telemetry",
     "description": "Simple multipurpose telemetry collecting, processing, and metering library.",
     "keywords": [
-		"telemetry",
-		"sensor",
+        "telemetry",
+        "sensor",
         "meter"
     ],
     "homepage": "http://nxsys.org/spaces/onx",
@@ -25,25 +25,35 @@
             "email": "onx@nxs.systems",
             "role": "Dev Team"
         }
-	],
-    "autoload":
-    {
-        "psr-4": { "NxSys\\Library\\Data\\Telemetry\\": "." }
+    ],
+	"autoload":
+	{
+		"psr-4":
+		{
+            "NxSys\\Library\\Data\\Telemetry\\": "."
+        }
     },
-    "require":
-    {
+	"require":
+	{
         "php": ">=7",
         "ext-SPL": "*"
     },
-    "suggest":
-    {
+	"suggest":
+	{
         "zf1/zend-measure": "*",
         "monolog/monolog": "*"
     },
-    "require-dev":
-    {
-        "nxsys/library.ncl": "dev-master",
+	"require-dev":
+	{
         "codeception/codeception": "^3"
     },
-    "minimum-stability": "stable"
+    "minimum-stability": "stable",
+	"repositories":
+	[
+        {
+			"type": "vcs",
+			"url": "https://subversion.assembla.com/svn/onx.ncl",
+			"package-path": "src/NxSys/Library/Data/Telemetry"
+		}
+	]
 }
