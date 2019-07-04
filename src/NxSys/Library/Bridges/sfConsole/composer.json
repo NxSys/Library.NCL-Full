@@ -1,0 +1,42 @@
+{
+    "name": "nxsys/library.bridges-sfconsole",
+    "description": "[NCL] Utility Bridge for Symfony Console",
+    "keywords": ["console", "symfony", "bridge", "ncl"],
+    "type": "library",
+    "license": "MIT",
+    "support":
+    {
+        "docs": "https://nxsys.assembla.com/spaces/onx/wiki/ncl",
+        "email": "oss@nxsysts.com",
+        "chat": "https://onx.zulipchat.com",
+        "issues": "https://nxsys.assembla.com/spaces/onx/tickets",
+        "forum": "https://nxsys.assembla.com/spaces/onx/messages",
+        "wiki": "http://code.fnetit.net/projects/onx/wiki",
+        "source": "https://nxsys.assembla.com/code/onx/subversion-3/repo",
+        "rss": "https://nxsys.assembla.com/spaces/onx/stream.rss"
+     },
+    "authors": [
+        {
+            "name": "Chris R Feamster",
+            "email": "cfeamster@nxsysts.com"
+        },
+        {
+            "name": "William A Graber, II",
+            "email": "wgraber@nxsysts.com"
+        },
+        {
+            "name": "Nexus Systems, Inc.",
+            "email": "oss@nxsysts.com"
+        }
+    ],
+    "require":
+    {
+        "PHP": "^7",
+        "symfony/console": "~2 || ~3"
+    },
+    "minimum-stability": "RC",
+    "autoload":
+    {
+        "psr-4": { "NxSys\\Library\\Bridges\\sfConsole\\": "/" }
+    }
+}

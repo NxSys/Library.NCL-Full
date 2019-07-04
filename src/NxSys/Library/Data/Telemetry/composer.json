@@ -1,0 +1,49 @@
+{
+    "name": "nxsys/library.data-telemetry",
+    "description": "Simple multipurpose telemetry collecting, processing, and metering library.",
+    "keywords": [
+		"telemetry",
+		"sensor",
+        "meter"
+    ],
+    "homepage": "http://nxsys.org/spaces/onx",
+    "license": "MIT",
+    "type": "library",
+    "support": {
+        "email": "onx@nxsysts.com",
+        "chat": "https://onx.zulipchat.com",
+        "issues": "https://nxsys.assembla.com/spaces/onx/tickets",
+        "forum": "https://nxsys.assembla.com/spaces/onx/messages",
+        "wiki": "https://nxsys.assembla.com/spaces/onx/wiki",
+        "source": "https://nxsys.assembla.com/spaces/onx/subversion/source",
+        "rss": "https://nxsys.assembla.com/spaces/onx/stream.rss"
+    },
+    "authors": [
+        {
+            "name": "Nexus Systems, Inc.",
+            "homepage": "https://nexussystemsinc.com/about/foss-commitment.html",
+            "email": "onx@nxs.systems",
+            "role": "Dev Team"
+        }
+	],
+    "autoload":
+    {
+        "psr-4": { "NxSys\\Library\\Data\\Telemetry\\": "." }
+    },
+    "require":
+    {
+        "php": ">=7",
+        "ext-SPL": "*"
+    },
+    "suggest":
+    {
+        "zf1/zend-measure": "*",
+        "monolog/monolog": "*"
+    },
+    "require-dev":
+    {
+        "nxsys/library.ncl": "dev-master",
+        "codeception/codeception": "^3"
+    },
+    "minimum-stability": "stable"
+}
