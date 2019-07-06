@@ -26,34 +26,20 @@
             "role": "Dev Team"
         }
     ],
-	"autoload":
+    "autoload":
 	{
-		"psr-4":
+        "psr-4":
 		{
             "NxSys\\Library\\Data\\Telemetry\\": "."
         }
     },
-	"require":
-	{
+    "require": {
         "php": ">=7",
         "ext-SPL": "*"
     },
-	"suggest":
-	{
+    "suggest": {
         "zf1/zend-measure": "*",
         "monolog/monolog": "*"
     },
-	"require-dev":
-	{
-        "codeception/codeception": "^3"
-    },
-    "minimum-stability": "stable",
-	"repositories":
-	[
-        {
-			"type": "vcs",
-			"url": "https://subversion.assembla.com/svn/onx.ncl",
-			"package-path": "src/NxSys/Library/Data/Telemetry"
-		}
-	]
+    "minimum-stability": "stable"
 }
