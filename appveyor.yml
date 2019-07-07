@@ -1,4 +1,4 @@
-version: 0.4.{build}
+version: 0.0.{build}
 init:
 - cmd: >-
     SET PATH=%PHPCI_PHP%;%PHPCI_COMPOSER%;%PATH%
@@ -13,7 +13,52 @@ environment:
   PHPCI_PHP: C:\tools\phpci\php
   PHPCI_COMPOSER: C:\tools\phpci\composer
 install:
-- cmd: "cinst javaruntime -y\nset _cd=%cd%\ncd \\tools && mkdir sonar\ncurl -O https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.0.0.1744.zip\n7z x -y sonar-scanner-cli-4.0.0.1744.zip\nset SONAR_RUNNER_HOME=%cd%\\sonar-scanner-4.0.0.1744\nset path=%path%;%cd%\\sonar-scanner-4.0.0.1744\\bin\nsonar-scanner --version\ncd %_cd%\n\nrem ===\n\nIF EXIST %PHPCI_CACHE% (SET PHP=1)\n\nIF %PHP%==0 cinst php -i -y --version %PHPCI_CHOCO_VERSION%  --params \"/InstallDir:%PHPCI_PHP% /ThreadSafe\"\nphp -v\nphp --ini\n\nIF %PHP%==0 cinst composer -i -y --ia \"/DEV=%PHPCI_COMPOSER%\"\n\nIF %PHP%==0 (composer --version) ELSE (composer self-update)\n\npushd %PHPCI_PHP%\ncd\ncd ext\ncurl -O https://xdebug.org/files/php_xdebug-2.7.2-7.3-vc15-x86_64.dll\ncurl -O https://windows.php.net/downloads/pecl/releases/parallel/1.1.2/php_parallel-1.1.2-7.3-ts-vc15-x64.zip\n7z e php_parallel-1.1.2-7.3-ts-vc15-x64.zip -y -bd\ncopy pthreadVC2.dll ..\n\ncd ..\necho extension=php_curl.dll >> php.ini\necho extension=php_parallel.dll >> php.ini\necho zend_extension=php_xdebug-2.7.2-7.3-vc15-x86_64.dll >> php.ini\npowershell cat php.ini -Tail 5\n\nphp -v\nphp --ri parallel\nphp --ri xdebug \n\n\ncd %APPVEYOR_BUILD_FOLDER%\nset path=%path%;%cd%\\vendor\\bin\ncomposer require phing/phing --no-update --no-interaction\ncomposer install --prefer-dist --no-progress  --no-interaction"
+- cmd: >-
+    cinst javaruntime -y
+    set _cd=%cd%
+    cd \\tools && mkdir sonar
+    curl -O https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.0.0.1744.zip
+    7z x -y sonar-scanner-cli-4.0.0.1744.zip
+    set SONAR_RUNNER_HOME=%cd%\\sonar-scanner-4.0.0.1744
+    set path=%path%;%cd%\\sonar-scanner-4.0.0.1744\\bin
+    sonar-scanner --version
+    cd %_cd%
+
+    rem ===
+
+    IF EXIST %PHPCI_CACHE% (SET PHP=1)
+
+    cinst php -i -y --version %PHPCI_CHOCO_VERSION%  --params \"/InstallDir:%PHPCI_PHP% /ThreadSafe\"
+    php -v
+    php --ini
+
+    cinst composer -i -y --ia \"/DEV=%PHPCI_COMPOSER%\"
+
+    IF %PHP%==0 (composer --version) ELSE (composer self-update)
+
+    pushd %PHPCI_PHP%
+    cd
+    cd ext
+    curl -O https://xdebug.org/files/php_xdebug-2.7.2-7.3-vc15-x86_64.dll
+    curl -O https://windows.php.net/downloads/pecl/releases/parallel/1.1.2/php_parallel-1.1.2-7.3-ts-vc15-x64.zip
+    7z e php_parallel-1.1.2-7.3-ts-vc15-x64.zip -y -bd
+    copy pthreadVC2.dll ..
+
+    cd ..
+    echo extension=php_curl.dll >> php.ini
+    echo extension=php_parallel.dll >> php.ini
+    echo zend_extension=php_xdebug-2.7.2-7.3-vc15-x86_64.dll >> php.ini
+    powershell cat php.ini -Tail 5
+
+    php -v
+    php --ri parallel
+    php --ri xdebug
+
+
+    cd %APPVEYOR_BUILD_FOLDER%
+    set path=%path%;%cd%\\vendor\\bin
+    composer require phing/phing --no-update --no-interaction
+    composer install --prefer-dist --no-progress  --no-interaction
 build_script:
 - cmd: phing
 test_script:
