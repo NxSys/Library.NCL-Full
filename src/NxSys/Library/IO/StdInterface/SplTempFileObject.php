@@ -20,7 +20,7 @@
 namespace NxSys\Library\IO\StdInterface;
 
 // Project Namespaces
-use NxSys\Library\IO as NclIo;
+use NxSys\Library\IO\StdInterface as NclIo;
 
 // PHP Names
 use SplTempFileObject as PHP_SplTempFileObject;

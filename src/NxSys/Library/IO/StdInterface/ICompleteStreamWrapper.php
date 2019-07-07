@@ -20,14 +20,14 @@
 namespace NxSys\Library\IO\StdInterface;
 
 // Project Namespaces
-use NxSys\Library\IO as NclIo;
+use NxSys\Library\IO\StdInterface as NclIo;
 
 /**
  * Interface for use with a *complete* streamWrapper
  *
- * Usage: Use like any other interface except now you can 1) rely on this 
+ * Usage: Use like any other interface except now you can 1) rely on this
  * class outside of StreamsExt and not have to use refelection 2) use the
- * ICompleteStreamWrapper type hint to help with that. E.g. you could now 
+ * ICompleteStreamWrapper type hint to help with that. E.g. you could now
  * handle, manage, and register streamwrappers more easily.
  *
  * Note: StreamsExt will behave differently depending on what method from a
