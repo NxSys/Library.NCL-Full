@@ -16,6 +16,7 @@
 #
 ============================================================================ -->
 <project name="nxsys/library.ncl" default="build">
+	<taskdef name="sonar" classname="phing.tasks.ext.sonar.SonarTask" />
 	<property file="build.properties" />
 	<if>
 		<not>
@@ -41,8 +42,8 @@
 	<!-- ============================================  -->
 	<target name="prepare">
 		<!--Needs "sed"-->
-		<exec command='svn info | sed -n "/URL:/s/.*\///p"'
-			  outputProperty='svnParentDir'/>
+		<!-- <exec command='svn info | sed -n "/URL:/s/.*\///p"'
+			  outputProperty='svnParentDir'/> -->
 		<reflexive>
 			<fileset dir="."
 				includes="box.json
@@ -59,12 +60,29 @@
 		<mkdir dir="vendor" />
 		<mkdir dir="build" />
 		<mkdir dir="res" />
+		<mkdir dir="tests" />
+	</target>
+
+    <!-- ============================================  -->
+    <!-- Target: tests                                 -->
+    <!-- ============================================  -->
+    <target name="tests">
+		<exec executable="codecept" passthru="true">
+			<arg line="run --coverage --coverage-xml --coverage-html --html --xml --tap"/>
+		</exec>
+		<sonar 	executable="sonar-scanner"
+				errors="true"
+				configuration="./sonar-project.properties" >
+			<!-- Assume that mandatory SonarQube parameters are defined in configuration file! -->
+			<property name="sonar.projectVersion" value="${prj.ver}" />
+			<property name="sonar.log.level" value="DEBUG" />
+		</sonar>
 	</target>
 
 	<!-- ============================================  -->
 	<!-- Target: (DEFAULT) build                       -->
 	<!-- ============================================  -->
-	<target name="build" depends="prepare">
+	<target name="build" depends="prepare, tests">
 		<echo msg="Building Phar..." />
 		<mkdir dir="build" />
 		<exec command='for /f "usebackq tokens=*" %b in (`where box /f`) do copy %b /y' />

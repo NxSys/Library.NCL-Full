@@ -18,23 +18,6 @@ $I->wantTo('test NxStdIO compatibility');
 class SplFileInfoSigTest extends SplFileInfo implements StdInterface\ISplFileInfo {}
 class SplFileObjectSigTest extends SplFileObject implements StdInterface\ISplFileObject {}
 
-
-$oInstrumentation=new Telemetry\Instrument('my.instument.group');
-(new Verify($oInstrumentation))->isInstanceOf('NxSys\Library\Telemetry\Instrument');
-
-$sensor=$oInstrumentation->createSensor('meh-sensor');
-(new Verify($sensor))->isInstanceOf('NxSys\Library\Telemetry\Sensor');
-
-$newSensor=new Telemetry\Sensor('mehzors');
-$I->assertEquals($oInstrumentation->attachSensor($newSensor), $newSensor);
-
-//test default setDefaultMeterStorageHandler usage
-$oInstrumentation->setDefaultMeterStorageHandler(new Telemetry\Meter\VoidStorageHandler);
-
-//test default setSensorGroupHeadProcessor
-$oInstrumentation->setSensorGroupHeadProcessor(new Telemetry\Processor\UltimateVoidProcessor);
-
-(new Verify($oInstrumentation));
 new SplFileObjectSigTest('c:\.rnd');
 var_dump(new StdInterface\SplFileObject('c:\.rnd'));
 

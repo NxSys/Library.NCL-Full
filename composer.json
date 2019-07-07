@@ -1,0 +1,54 @@
+{
+    "name": "nxsys/library-ncl.full",
+    "description": "Nexus Common Library",
+	"homepage": "http://nxsys.org/spaces/onx",
+	"license": "MIT",
+	"type": "library",
+    "keywords": [
+		"execution",
+		"io",
+		"security",
+		"scheduler",
+		"telemetry",
+		"interfaces",
+		"utilities",
+        "megalith"
+    ],
+    "support": {
+        "email": "onx@nxsysts.com",
+        "chat": "https://onx.zulipchat.com",
+        "issues": "https://nxsys.assembla.com/spaces/onx/tickets",
+        "forum": "https://nxsys.assembla.com/spaces/onx/messages",
+        "wiki": "https://nxsys.assembla.com/spaces/onx/wiki",
+        "source": "https://nxsys.assembla.com/spaces/onx/subversion/source",
+        "rss": "https://nxsys.assembla.com/spaces/onx/stream.rss"
+    },
+    "authors": [
+        {
+            "name": "Nexus Systems, Inc.",
+            "homepage": "https://nexussystemsinc.com/about/foss-commitment.html",
+            "email": "onx@nxs.systems",
+            "role": "Dev Team"
+        }
+    ],
+	"autoload":
+	{
+		"psr-0":
+		{
+             "": "src/"
+        }
+    },
+	"require":
+	{
+		"PHP": ">=7",
+		"ext-spl": "*"
+    },
+	"repositories":
+	[
+        {"type": "path", "url": "./src/NxSys/Library/Bridges/*"},
+        {"type": "path", "url": "./src/NxSys/Library/Data/*"},
+        {"type": "path", "url": "./src/NxSys/Library/IO/*"},
+        {"type": "path", "url": "./src/NxSys/Library/Security/*"},
+        {"type": "path", "url": "./src/NxSys/Library/Utilities/*"}
+	]
+}

@@ -1,6 +1,6 @@
 <?php
 
-use NxSys\Library\Telemetry;
+use NxSys\Library\Data\Telemetry;
 
 use Codeception\Verify;
 
@@ -82,8 +82,8 @@ class Telemetry_sensorTest extends \Codeception\TestCase\Test
     public function testGeneralOperation()
     {
 		$oInstrumentation=new Telemetry\Instrument('my.instument.group');
-		$sensor=$oInstrumentation->createSensor('poke-sensor');
-		$sensor->setDefaultUnit('pokes');
+		$sensor=$oInstrumentation->createSensor('poke-sensor', 'pokes');
+		// $sensor->setDefaultUnit('pokes'); this method is protected now
 		$sensor->measure('10');
 
 		//or don't use the Instrument utility...

@@ -1,2 +1,4 @@
+/.scannerwork
 /build
 src/NxSys/Library/Data/Telemetry/*
+tests/_output/*

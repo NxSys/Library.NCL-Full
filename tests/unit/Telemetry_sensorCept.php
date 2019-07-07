@@ -1,5 +1,5 @@
 <?php
-use NxSys\Library\Telemetry;
+use NxSys\Library\Data\Telemetry;
 use Codeception\Verify;
 
 // @group 'Telemetry'
@@ -7,12 +7,12 @@ $I = new UnitTester($scenario);
 
 $I->wantTo('test my sensor');
 $oInstrumentation=new Telemetry\Instrument('my.instument.group');
-$sensor=$oInstrumentation->createSensor('poke-sensor');
-(new Verify($sensor))->isInstanceOf('NxSys\Library\Telemetry\Sensor');
+$sensor=$oInstrumentation->createSensor('poke-sensor', 'pokes');
+(new Verify($sensor))->isInstanceOf('NxSys\Library\Data\Telemetry\Sensor');
 
 //$I->assertTrue('meter');
 
-	$sensor->setDefaultUnit('pokes');
+	// $sensor->setDefaultUnit('pokes');
 	$sensor->measure('10');
 
 	//or don't use the Instrument utility...

@@ -1,7 +1,9 @@
 * text=auto !eol
+/appveyor.yml -text
 /build.properties -text
 /build.xml -text
 /codeception.yml -text
+/composer.json -text
 /sonar-project.properties -text
 src-docs/apigen.neon -text
 src/NxSys/Library/Bridges/sfConsole/ToolApplication.php -text
@@ -76,13 +78,13 @@ src/NxSys/Library/Utility/Scheduler/Temporal/Week.php -text
 src/NxSys/Library/Utility/Scheduler/Temporal/Year.php -text
 src/NxSys/Library/Utility/Scheduler/TemporalInterface.php -text
 src/NxSys/Library/Utility/Scheduler/composer.json -text
-tests/_bootstrap.php -text
 tests/_support/Codeception/Verify.php -text
 tests/_support/Codeception/function.php -text
 tests/_support/FunctionalTester.php -text
 tests/_support/Helper/Functional.php -text
 tests/_support/Helper/Unit.php -text
 tests/_support/UnitTester.php -text
+tests/_support/_generated/UnitTesterActions.php -text
 tests/unit.suite.yml -text
 tests/unit/IO.feature -text
 tests/unit/IO_stdInterfaceCept.php -text
