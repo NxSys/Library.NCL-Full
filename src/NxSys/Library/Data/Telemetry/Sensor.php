@@ -65,7 +65,7 @@ class Sensor
 								$sInstrumentId=null,
 								$sDefaultUnit='event')
 	{
-		$this->sDefaultUnit=$sDefaultUnit;
+		$this->setDefaultUnit($sDefaultUnit);
 		$this->sSensorId=$sSensorId;
 		// we can't have null InstrumentIds, no really. its a bad idea
 		$this->sInstrumentId=$sInstrumentId?:$sSensorId;
