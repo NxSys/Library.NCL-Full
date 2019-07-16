@@ -10,7 +10,7 @@
 		"security",
 		"scheduler",
 		"telemetry",
-		"interfaces",
+		"stdlib",
 		"utilities",
         "megalith"
     ],
