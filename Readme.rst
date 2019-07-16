@@ -29,7 +29,6 @@ Badge-Belt
 .. image:: https://img.shields.io/packagist/php-v/nxsys/library.ncl-full.svg?logo=php&style=flat-square
     :alt: PHP from Packagist
     :target: https://packagist.org/packages/nxsys/library-ncl.full
-
 .. image:: https://img.shields.io/appveyor/ci/nxsys/trunk.svg?logo=appveyor&style=flat-square
     :alt: AppVeyor
 .. image:: https://img.shields.io/sonar/sqale_debt_ratio/nxsys.library-ncl.full.svg?server=https%3A%2F%2Fsonarcloud.io&style=flat-square
@@ -38,7 +37,6 @@ Badge-Belt
 .. image:: https://img.shields.io/sonar/alert_status/nxsys.library-ncl.full.svg?server=https%3A%2F%2Fsonarcloud.io&style=flat-square
     :alt: Sonar Quality Gate
     :target: https://packagist.org/packages/nxsys/library-ncl.full
-
 .. image:: https://img.shields.io/cii/summary/2982.svg?style=flat-square
     :alt: CII Best Practices Summary
 
@@ -90,5 +88,3 @@ REFERENCES
 ==========
 Key words for use in RFCs to Indicate Requirement Levels
 http://www.ietf.org/rfc/rfc2119.txt
-
-
