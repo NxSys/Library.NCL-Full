@@ -12,7 +12,7 @@
 # @author $LastChangedBy$
 #
 # @version $Revision$
-# @copyright (c) 2016 Nexus Systems, Inc. Some rights reserved.
+# @copyright (c) 2019 Nexus Systems, Inc. Some rights reserved.
 #
 ============================================================================ -->
 <project name="nxsys/library.ncl" default="build">
@@ -70,13 +70,21 @@
 		<exec executable="codecept" passthru="true">
 			<arg line="run --coverage --coverage-xml --coverage-html --html --xml --tap"/>
 		</exec>
-		<!-- <sonar 	executable="sonar-scanner"
+		<sonar 	executable="sonar-scanner"
 				errors="true"
 				configuration="./sonar-project.properties" >
-			<- Assume that mandatory SonarQube parameters are defined in configuration file! ->
+			<!-- Assume that mandatory SonarQube parameters are defined in configuration file! -->
+			<property name="sonar.host.url" value="https://sonarcloud.io" />
+			<property name="sonar.login" 	value="${env.SONAR_KEY}" />
+
+			<property name="sonar.projectBaseDir" value="${env.APPVEYOR_BUILD_FOLDER}" />
+			<property name="sonar.buildString" value="${env.APPVEYOR_BUILD_ID}" />
 			<property name="sonar.projectVersion" value="${prj.ver}" />
 			<property name="sonar.log.level" value="DEBUG" />
-		</sonar> -->
+		</sonar>
+		<exec executable="powershell" passthru="true">
+			<arg line="(New-Object 'System.Net.WebClient').UploadFile('https://ci.appveyor.com/api/testresults/junit/' + '%APPVEYOR_JOB_ID%', (Resolve-Path '.\tests\_output\report.xml'))"/>
+		</exec>
 	</target>
 
 	<!-- ============================================  -->
@@ -85,26 +93,12 @@
 	<target name="build" depends="prepare, tests">
 		<echo msg="Building Phar..." />
 		<mkdir dir="build" />
-		<exec command='for /f "usebackq tokens=*" %b in (`where box /f`) do copy %b /y' />
-		<if>
-			<not>
-				<available file="box.phar" />
-			</not>
-			<then>
-				<exec command="curl -LSs https://box-project.github.io/box2/installer.php | php" />
-				<if>
-					<not>
-						<available file="box.phar" />
-					</not>
-					<then>
-						<fail message="Unable to obtain box.phar. Please goto http://box-project.github.io/box2 and place box.phar in your path or current directory." />
-					</then>
-				</if>
-			</then>
-		</if>
-		<exec command="php -d phar.readonly=Off -f box.phar -- build -v" />
-		<!-- <copy file="${prj.identkey}.phar" todir="build" /> -->
-		<!-- <copy file="${prj.identkey}.phar.pubkey" todir="build" /> -->
+		<echo file="index.php" append="false">Phar is a library package and is not executiable.\n\trequire_once 'phar://&lt;PHAR FILE&gt;/vendor/autoload.php';</echo>
+		<exec executable="box" passthru="true">
+			<arg line="compile -v"/>
+		</exec>
+		<move file="index.phar" tofile="${prj.identkey}.phar" />
+		<copy file="${prj.identkey}.phar" todir="build" />
 	</target>
 
 	<!-- ============================================  -->
@@ -123,6 +117,7 @@
 	<!-- Target: prepare-dist                          -->
 	<!-- ============================================  -->
 	<target name="prepare-dist" depends="build-docs, build">
+		<!-- Remember that on run, this task will +1 w/e this file says! -->
 		<version releasetype="Bugfix" file="version.txt" property="prj.ver"/>
 	</target>
 
@@ -131,7 +126,7 @@
 	<!-- ============================================  -->
 	<target name="dist-phar" depends="prepare-dist">
 		<echo msg="Creating archive..." />
-		<zip destfile="./build/${prj.identkey}-phar_${prj.ver}+${DSTAMP}${TSTAMP}.zip">
+		<zip destfile="./build/${prj.identkey}-phar_${prj.buildId}.zip">
 			<fileset dir=".">
 				<include name="${prj.identkey}.phar" />
 				<include name="${prj.identkey}.phar.pubkey" />
@@ -144,10 +139,9 @@
 	<!-- ============================================  -->
 	<target name="dist-full" depends="prepare-dist">
 		<echo msg="Creating archive..." />
-		<zip destfile="./build/${prj.identkey}-full_${prj.ver}+${DSTAMP}${TSTAMP}.zip">
+		<zip destfile="./build/${prj.identkey}-${prj.buildId}_full.zip">
 			<fileset dir=".">
 				<include name="${prj.identkey}.phar" />
-				<include name="${prj.identkey}.phar.pubkey" />
 				<include name="${prj.identkey}.conf" />
 				<include name="libs/" />
 				<include name="etc/" />

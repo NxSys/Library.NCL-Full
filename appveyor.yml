@@ -62,16 +62,13 @@ install:
 
     set path=%path%;%cd%\\vendor\\bin
 
-    composer require phing/phing --no-update --no-interaction
-
     composer install --prefer-dist --no-progress  --no-interaction
 build_script:
-- cmd: phing
+- cmd: phing -verbose
+- cmd: phing -verbose build-docs
 test_script:
 - cmd: >-
-    phing test
-    powershell (New-Object 'System.Net.WebClient').UploadFile('https://ci.appveyor.com/api/testresults/junit/' + '%APPVEYOR_JOB_ID%', (Resolve-Path '.\tests\_output\report.xml'))
-    sonar-scanner -D"project.settings=%cd%\sonar-project.properties" -D"sonar.projectVersion=%APPVEYOR_BUILD_VERSION%" -D"sonar.projectBaseDir=%APPVEYOR_BUILD_FOLDER%" -D"sonar.buildString=%APPVEYOR_BUILD_ID%" -D"sonar.host.url=https://sonarcloud.io" -D"sonar.login=b28706bc660ef44e28f99592a3e3284a6723bf8c"
+    phing -verbose tests
 artifacts:
 - path: .\build
   name: build
