@@ -35,7 +35,7 @@ install:
 
     cinst composer -i -y --ia "/DEV=%PHPCI_COMPOSER%"
 
-    IF %PHP%==0 (composer --version) ELSE (composer self-update)
+    composer --version
 
     pushd %PHPCI_PHP%
 
