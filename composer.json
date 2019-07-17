@@ -50,5 +50,9 @@
         {"type": "path", "url": "./src/NxSys/Library/IO/*"},
         {"type": "path", "url": "./src/NxSys/Library/Security/*"},
         {"type": "path", "url": "./src/NxSys/Library/Utilities/*"}
-	]
+	],
+    "require-dev": {
+        "codeception/codeception": "^3.0",
+        "phing/phing": "^2.16"
+    }
 }

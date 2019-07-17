@@ -70,13 +70,13 @@
 		<exec executable="codecept" passthru="true">
 			<arg line="run --coverage --coverage-xml --coverage-html --html --xml --tap"/>
 		</exec>
-		<sonar 	executable="sonar-scanner"
+		<!-- <sonar 	executable="sonar-scanner"
 				errors="true"
 				configuration="./sonar-project.properties" >
-			<!-- Assume that mandatory SonarQube parameters are defined in configuration file! -->
+			<- Assume that mandatory SonarQube parameters are defined in configuration file! ->
 			<property name="sonar.projectVersion" value="${prj.ver}" />
 			<property name="sonar.log.level" value="DEBUG" />
-		</sonar>
+		</sonar> -->
 	</target>
 
 	<!-- ============================================  -->
