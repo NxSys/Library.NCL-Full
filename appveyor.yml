@@ -15,11 +15,11 @@ environment:
 install:
 - cmd: cinst javaruntime -y
 - cmd: set _cd=%cd%
-- cmd: cd \\tools && mkdir sonar
+- cmd: cd \tools && mkdir sonar
 - cmd: curl -O https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.0.0.1744.zip
 - cmd: 7z x -y sonar-scanner-cli-4.0.0.1744.zip
-- cmd: set SONAR_RUNNER_HOME=%cd%\\sonar-scanner-4.0.0.1744
-- cmd: set path=%path%;%cd%\\sonar-scanner-4.0.0.1744\\bin
+- cmd: set SONAR_RUNNER_HOME=%cd%\sonar-scanner-4.0.0.1744
+- cmd: set path=%path%;%cd%\sonar-scanner-4.0.0.1744\bin
 - cmd: sonar-scanner --version
 - cmd: cd %_cd%
 - cmd: >-
