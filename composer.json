@@ -54,6 +54,8 @@
     "require-dev": {
         "codeception/codeception": "^3.0",
         "phing/phing": "^2.16",
-        "apigen/apigen": "^4.1"
-    }
+        "apigen/apigen": "dev-master",
+        "roave/better-reflection": "dev-master"
+    },
+    "minimum-stability": "dev"
 }

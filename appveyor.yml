@@ -15,13 +15,13 @@ environment:
 install:
 - cmd: cinst javaruntime -y
 - cmd: set _cd=%cd%
-- cmd: cd \tools && mkdir sonar
+- cmd: cd \tools && cd && mkdir sonar
 - cmd: curl -O https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.0.0.1744.zip
 - cmd: 7z x -y sonar-scanner-cli-4.0.0.1744.zip
 - cmd: set SONAR_RUNNER_HOME=%cd%\sonar-scanner-4.0.0.1744
 - cmd: set path=%path%;%cd%\sonar-scanner-4.0.0.1744\bin
 - cmd: sonar-scanner --version
-- cmd: cd %_cd%
+- cmd: cd %_cd% && cd
 - cmd: >-
     rem ===
 
@@ -41,11 +41,11 @@ install:
 
     cd
 
-    cd ext
+    cd ext && cd
 
     curl -O https://xdebug.org/files/php_xdebug-2.7.2-7.3-vc15-x86_64.dll
 
-    cd ..
+    cd .. && cd
 
     echo extension=php_curl.dll >> php.ini
 
@@ -58,13 +58,15 @@ install:
     php --ri xdebug
 
 
-    cd %APPVEYOR_BUILD_FOLDER%
+    cd %APPVEYOR_BUILD_FOLDER% && cd
 
     set path=%path%;%cd%\\vendor\\bin
 
     curl -O https://github.com/humbug/box/releases/download/3.8.0/box.phar
 
-    composer install --prefer-dist --no-progress --no-interaction
+    composer install --prefer-dist --no-progress --no-interaction -vvv
+
+
 build_script:
 - cmd: phing -verbose
 - cmd: phing -verbose build-docs
