@@ -103,8 +103,8 @@
 			</then>
 		</if>
 		<exec command="php -d phar.readonly=Off -f box.phar -- build -v" />
-		<copy file="${prj.identkey}.phar" todir="build" />
-		<copy file="${prj.identkey}.phar.pubkey" todir="build" />
+		<!-- <copy file="${prj.identkey}.phar" todir="build" /> -->
+		<!-- <copy file="${prj.identkey}.phar.pubkey" todir="build" /> -->
 	</target>
 
 	<!-- ============================================  -->
