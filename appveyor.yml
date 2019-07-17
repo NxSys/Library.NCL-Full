@@ -64,7 +64,7 @@ install:
 
     curl -O https://github.com/humbug/box/releases/download/3.8.0/box.phar
 
-    composer install --prefer-dist --no-interaction
+    composer install --prefer-dist --no-progress --no-interaction
 build_script:
 - cmd: phing -verbose
 - cmd: phing -verbose build-docs
