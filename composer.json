@@ -54,7 +54,6 @@
     "require-dev": {
         "codeception/codeception": "^3.0",
         "phing/phing": "^2.16",
-        "humbug/box": "^3.8",
         "apigen/apigen": "^4.1"
     }
 }

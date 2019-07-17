@@ -62,7 +62,9 @@ install:
 
     set path=%path%;%cd%\\vendor\\bin
 
-    composer install --prefer-dist --no-progress  --no-interaction
+    curl -O https://github.com/humbug/box/releases/download/3.8.0/box.phar
+
+    composer install --prefer-dist --no-interaction
 build_script:
 - cmd: phing -verbose
 - cmd: phing -verbose build-docs
