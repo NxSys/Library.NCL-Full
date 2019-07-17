@@ -27,13 +27,13 @@ install:
 
     IF EXIST %PHPCI_CACHE% (SET PHP=1)
 
-    cinst php -i -y --version %PHPCI_CHOCO_VERSION%  --params \"/InstallDir:%PHPCI_PHP% /ThreadSafe\"
+    cinst php -i -y --version %PHPCI_CHOCO_VERSION%  --params "/InstallDir:%PHPCI_PHP% /ThreadSafe"
 
     php -v
 
     php --ini
 
-    cinst composer -i -y --ia \"/DEV=%PHPCI_COMPOSER%\"
+    cinst composer -i -y --ia "/DEV=%PHPCI_COMPOSER%"
 
     IF %PHP%==0 (composer --version) ELSE (composer self-update)
 
