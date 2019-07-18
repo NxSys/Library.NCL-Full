@@ -13,10 +13,12 @@ environment:
   PHPCI_PHP: C:\tools\phpci\php
   PHPCI_COMPOSER: C:\tools\phpci\composer
 install:
+- cmd: cinst wget -i -y
+- cmd: wget -V
 - cmd: cinst javaruntime -y
 - cmd: set _cd=%cd%
 - cmd: cd \tools && cd && mkdir sonar
-- cmd: curl -O https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.0.0.1744.zip
+- cmd: wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.0.0.1744.zip
 - cmd: 7z x -y sonar-scanner-cli-4.0.0.1744.zip
 - cmd: set SONAR_RUNNER_HOME=%cd%\sonar-scanner-4.0.0.1744
 - cmd: set path=%path%;%cd%\sonar-scanner-4.0.0.1744\bin
@@ -43,7 +45,7 @@ install:
 
     cd ext && cd
 
-    curl -O https://xdebug.org/files/php_xdebug-2.7.2-7.3-vc15-x86_64.dll
+    wget https://xdebug.org/files/php_xdebug-2.7.2-7.3-vc15-x86_64.dll
 
     cd .. && cd
 
@@ -62,10 +64,9 @@ install:
 
     set path=%path%;%cd%\\vendor\\bin
 
-    curl -O https://github.com/humbug/box/releases/download/3.8.0/box.phar
+    wget https://github.com/humbug/box/releases/download/3.8.0/box.phar
 
-    composer install --prefer-dist --no-progress --no-interaction -vvv
-
+    composer install --prefer-dist --no-interaction --verbose
 
 build_script:
 - cmd: phing -verbose

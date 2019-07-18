@@ -80,10 +80,10 @@
 			<property name="sonar.projectBaseDir" value="${env.APPVEYOR_BUILD_FOLDER}" />
 			<property name="sonar.buildString" value="${env.APPVEYOR_BUILD_ID}" />
 			<property name="sonar.projectVersion" value="${prj.ver}" />
-			<property name="sonar.log.level" value="DEBUG" />
+			<!-- <property name="sonar.log.level" value="DEBUG" /> -->
 		</sonar>
 		<exec executable="powershell" passthru="true">
-			<arg line="(New-Object 'System.Net.WebClient').UploadFile('https://ci.appveyor.com/api/testresults/junit/' + '%APPVEYOR_JOB_ID%', (Resolve-Path '.\tests\_output\report.xml'))"/>
+			<arg line="(New-Object \'System.Net.WebClient\').UploadFile(\'https://ci.appveyor.com/api/testresults/junit/\' + \'$(env.APPVEYOR_JOB_ID)\', (Resolve-Path \'.\tests\_output\report.xml\'))"/>
 		</exec>
 	</target>
 
