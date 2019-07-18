@@ -67,7 +67,7 @@
     <!-- Target: tests                                 -->
     <!-- ============================================  -->
     <target name="tests">
-		<exec executable="codecept" passthru="true">
+		<exec executable="codecept" passthru="true" checkreturn="true">
 			<arg line="run --coverage --coverage-xml --coverage-html --html --xml --tap"/>
 		</exec>
 		<sonar 	executable="sonar-scanner"
@@ -78,12 +78,12 @@
 			<property name="sonar.login" 	value="${env.SONAR_KEY}" />
 
 			<property name="sonar.projectBaseDir" value="${env.APPVEYOR_BUILD_FOLDER}" />
-			<property name="sonar.buildString" value="${env.APPVEYOR_BUILD_ID}" />
+			<property name="sonar.buildString" value="${prj.buildId}" />
 			<property name="sonar.projectVersion" value="${prj.ver}" />
 			<!-- <property name="sonar.log.level" value="DEBUG" /> -->
 		</sonar>
-		<exec executable="powershell" passthru="true">
-			<arg line="(New-Object &apos;System.Net.WebClient&apos;).UploadFile(&apos;https://ci.appveyor.com/api/testresults/junit/${env.APPVEYOR_JOB_ID}&apos;, (Resolve-Path &apos;.\tests\_output\report.xml&apos;))"/>
+		<exec executable="powershell" passthru="true" escape="false">
+			<arg line="(New-Object &quot;'System.Net.WebClient'&quot;).UploadFile(&quot;'https://ci.appveyor.com/api/testresults/junit/${env.APPVEYOR_JOB_ID}'&quot;, (Resolve-Path &apos;'.\tests\_output\report.xml'&apos;))"/>
 		</exec>
 	</target>
 
