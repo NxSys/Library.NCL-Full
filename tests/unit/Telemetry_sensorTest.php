@@ -109,6 +109,9 @@ class Telemetry_sensorTest extends \Codeception\TestCase\Test
 		//$sensor->removeContext($hctx);
 		$sensor->measure('10');
 		$sensor->addMeasurement(new Telemetry\Measurement('success-units', 1));
+
+		//we got this far
+		(new Verify(true))->true();
     }
 
 }
