@@ -91,8 +91,10 @@ This project is offered for use under the terms of the MIT License.
 
 REFERENCES
 ==========
-
-Key words for use in RFCs to Indicate Requirement Levels
-http://www.ietf.org/rfc/rfc2119.txt
+- `RFC 4120 - The Kerberos Network Authentication Service (V5) <https://www.rfc-editor.org/rfc/rfc4120.html>`_
+- `RFC 2743 - Generic Security Service Application Program Interface Version 2, Update 1 <https://www.rfc-editor.org/rfc/rfc2743.html>`_
+- `RFC 4121 - The Kerberos Version 5 Generic Security Service Application Program Interface (GSS-API) Mechanism: Version 2 <https://www.rfc-editor.org/rfc/rfc4121.html>`_
+- `RFC 4178 - The Simple and Protected Generic Security Service Application Program Interface (GSS-API) Negotiation Mechanism <https://www.rfc-editor.org/rfc/rfc4178.html>`_
+- `RFC 2119 - Key words for use in RFCs to Indicate Requirement Levels <https://www.rfc-editor.org/rfc/rfc2119.html>`_
 
 https://www.kerberos.org/software/appskerberos.pdf
