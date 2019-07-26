@@ -1,5 +1,6 @@
 * text=auto !eol
 /License.txt -text
+/PharMain.php -text
 /Readme.rst -text
 /appveyor.yml -text
 /build.properties -text
@@ -62,6 +63,7 @@ src/NxSys/Library/IO/StdInterface/SplFileObject.php -text
 src/NxSys/Library/IO/StdInterface/SplTempFileObject.php -text
 src/NxSys/Library/IO/StdInterface/composer.json -text
 src/NxSys/Library/Security/Kerberos/Readme.rst -text
+src/NxSys/Library/Security/Kerberos/sketch.php -text
 src/NxSys/Library/Utility/Scheduler/Exception/InvalidRuleException.php -text
 src/NxSys/Library/Utility/Scheduler/Exception/NotImplementedException.php -text
 src/NxSys/Library/Utility/Scheduler/Exception/RuleConflictException.php -text
